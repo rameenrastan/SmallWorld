@@ -38,8 +38,6 @@ bool Map::isConnected(Region & startNode)
 	cout << "Regions Visited (Connected): " << visited.size() << endl;
 	cout << "Total number of regions: " << regions.size() << endl;
 
-	vector<string> regionList;
-
 	if (visited.size() == regions.size())
 	{
 		cout << "Map Valid: This graph is connected!" << endl;
