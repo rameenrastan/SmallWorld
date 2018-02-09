@@ -1,35 +1,19 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Region.h"
+
 using namespace std;
 
 class Map
 {
-public:
-	class Region
-	{
-	private:
-		vector<Region> neighbors;
-		string owner;
-		string regionName;
-		int numTokens;
-	public:
-		void setOwner(string playerName);
-		void setRegionName(string name);
-		void setNumTokens(int num);
-		void addNeighbor(Region r);
-		string getOwner() const;
-		string getRegionName() const;
-		int getNumTokens() const;	
-		Region();
-		Region(string regionName);
-		~Region();
-	};
+private:
 	vector<Region> regions;
+	vector<string> visited;
+public:
 	void addRegion(Region r);
-	void setBorder(Region r1, Region r2);
+	void traversal(Region & currentNode);
 	bool isConnected();
-
 	Map();
 	~Map();
 };

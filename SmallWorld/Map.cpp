@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Map.h"
+#include <algorithm>
+#include <iostream>
 
 
 void Map::addRegion(Region r)
@@ -7,20 +9,42 @@ void Map::addRegion(Region r)
 	regions.push_back(r);
 }
 
-void Map::setBorder(Region r1, Region r2)
+void Map::traversal(Region & currentNode)
 {
-	r1.addNeighbor(r2);
-	r2.addNeighbor(r1);
+	visited.push_back(currentNode.getRegionName());
+	Region* current = &currentNode;
+	cout << (*current).getRegionName() << " loc: " << current << endl;
+	vector<Region*> neighbors = (*current).getNeighbors();
+	for (auto & neighbor : neighbors)
+	{
+		if (std::find(visited.begin(), visited.end(), (*neighbor).getRegionName()) != visited.end()) {
+		}
+		else {
+			cout << (*neighbor).getRegionName() << " neighbors: " << (*neighbor).getNeighbors().size() << " location: " << neighbor << endl;
+			traversal(*neighbor);
+		}
+	}
 }
 
 bool Map::isConnected()
 {
-	vector<Region> visited;
-	Region *currentRegion = &regions.front();
-	visited.push_back(*currentRegion);
+	cout << visited.size() << endl;
+	cout << regions.size() << endl;
+	vector<string> regionList;
 
+	for (int i = 0; i < regions.size(); i++)
+	{
+		regionList.push_back(regions[i].getRegionName());
+	}
+	if (visited.size() == regionList.size())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 
-	return false;
 }
 
 Map::Map()
@@ -30,54 +54,4 @@ Map::Map()
 
 Map::~Map()
 {
-}
-
-Map::Region::Region()
-{
-}
-
-Map::Region::Region(string name)
-{
-	regionName  = name;
-	owner = "none";
-	numTokens = 0;
-}
-
-Map::Region::~Region()
-{
-}
-
-void Map::Region::setOwner(string playerName)
-{
-	playerName = owner;
-}
-
-string Map::Region::getRegionName() const
-{
-	return regionName;
-}
-
-int Map::Region::getNumTokens() const
-{
-	return numTokens;
-}
-
-void Map::Region::setRegionName(string name)
-{
-	regionName = name;
-}
-
-void Map::Region::setNumTokens(int num)
-{
-	numTokens = num;
-}
-
-void Map::Region::addNeighbor(Region r)
-{
-	neighbors.push_back(r);
-}
-
-string Map::Region::getOwner() const
-{
-	return owner;
 }
