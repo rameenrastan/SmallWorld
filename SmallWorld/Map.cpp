@@ -30,17 +30,17 @@ void Map::dfsTraversal(Region & currentNode)
 	}
 }
 
-bool Map::isConnected()
+bool Map::isConnected(Region & startNode)
 {
+
+	dfsTraversal(startNode);
+
 	cout << "Regions Visited (Connected): " << visited.size() << endl;
 	cout << "Total number of regions: " << regions.size() << endl;
+
 	vector<string> regionList;
 
-	for (int i = 0; i < regions.size(); i++)
-	{
-		regionList.push_back((*regions[i]).getRegionName());
-	}
-	if (visited.size() == regionList.size())
+	if (visited.size() == regions.size())
 	{
 		cout << "Map Valid: This graph is connected!" << endl;
 		return true;
