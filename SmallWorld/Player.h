@@ -6,6 +6,7 @@ class Player
 {
 private:
 	string name;
+
 	vector<Region*> ownedRegions;
 	
 public:

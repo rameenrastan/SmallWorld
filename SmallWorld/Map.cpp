@@ -4,12 +4,19 @@
 #include <iostream>
 
 
-void Map::addRegion(Region r)
+void Map::addBorder(Region * r1, Region * r2)
+{
+	(*r1).addNeighbor(r2);
+	(*r2).addNeighbor(r1);
+
+}
+
+void Map::addRegion(Region* r)
 {
 	regions.push_back(r);
 }
 
-void Map::traversal(Region & currentNode)
+void Map::dfsTraversal(Region & currentNode)
 {
 	visited.push_back(currentNode.getRegionName());
 	Region* current = &currentNode;
@@ -21,7 +28,7 @@ void Map::traversal(Region & currentNode)
 		}
 		else {
 			cout << (*neighbor).getRegionName() << " neighbors: " << (*neighbor).getNeighbors().size() << " location: " << neighbor << endl;
-			traversal(*neighbor);
+			dfsTraversal(*neighbor);
 		}
 	}
 }
@@ -34,7 +41,7 @@ bool Map::isConnected()
 
 	for (int i = 0; i < regions.size(); i++)
 	{
-		regionList.push_back(regions[i].getRegionName());
+		regionList.push_back((*regions[i]).getRegionName());
 	}
 	if (visited.size() == regionList.size())
 	{
@@ -46,6 +53,7 @@ bool Map::isConnected()
 	}
 
 }
+
 
 Map::Map()
 {

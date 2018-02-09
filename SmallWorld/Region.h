@@ -15,7 +15,8 @@ public:
 	void setRegionName(string name);
 	void setNumTokens(int num);
 	void addNeighbor(Region*  &r);
-	vector<Region*> getNeighbors() const;
+	vector<Region*> getNeighbors()
+		const;
 	string getOwner() const;
 	string getRegionName() const;
 	int getNumTokens() const;

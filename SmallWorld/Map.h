@@ -8,11 +8,12 @@ using namespace std;
 class Map
 {
 private:
-	vector<Region> regions;
+	vector<Region*> regions;
 	vector<string> visited;
 public:
-	void addRegion(Region r);
-	void traversal(Region & currentNode);
+	void addBorder(Region* r1, Region* r2);
+	void addRegion(Region* r);
+	void dfsTraversal(Region & currentNode);
 	bool isConnected();
 	Map();
 	~Map();
