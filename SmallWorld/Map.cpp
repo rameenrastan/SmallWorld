@@ -30,13 +30,13 @@ void Map::dfsTraversal(Region & currentNode)
 	}
 }
 
-bool Map::isConnected(Region & startNode)
+bool Map::isConnected()
 {
-
-	dfsTraversal(startNode);
-
+	cout << "Verifying if map is valid (if its a connected graph) ..." << endl;
+	dfsTraversal(*regions[0]);
 	cout << "Regions Visited (Connected): " << visited.size() << endl;
 	cout << "Total number of regions: " << regions.size() << endl;
+
 
 	if (visited.size() == regions.size())
 	{
@@ -48,6 +48,11 @@ bool Map::isConnected(Region & startNode)
 		cout << "Map Invalid: This graph is not connected!" << endl;
 		return false;
 	}
+}
+
+Map::Map(vector<Region*> r)
+{
+	regions = r;
 }
 
 

@@ -20,7 +20,7 @@ public:
 	string getRegionName() const;
 	int getNumTokens() const;
 	Region();
-	Region(string regionName);
+	Region(string name);
 	~Region();
 	
 };
