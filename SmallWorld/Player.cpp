@@ -48,7 +48,7 @@ void Player::picks_race(Banner banner, Badge bad)
 	//cout<<bad.getBadge();
 }
 
-void Player::conquers(Region region)
+void Player::conquers(Region* &region)
 {
 	ownedRegions.push_back(region);
 	regionCount++;

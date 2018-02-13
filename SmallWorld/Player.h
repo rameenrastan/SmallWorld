@@ -12,7 +12,7 @@ class Player
 {
 private:
 	string playerName;
-	vector<Region> ownedRegions;
+	vector<Region*> ownedRegions;
 	vector<Token*> ownedTokens;
 	vector<VictoryCoin*> ownedCoins;
 	vector<Badge> badge;
@@ -35,7 +35,7 @@ public:
 	int getcoinCount();
 
 	void picks_race(Banner banner, Badge bad);
-	void conquers(Region region);
+	void conquers(Region* &region);
 	void scores();
 };
 
