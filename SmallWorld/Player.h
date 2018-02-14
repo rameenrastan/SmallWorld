@@ -35,7 +35,7 @@ public:
 	int getcoinCount();
 	bool checkRegionAdjacency(Region* region);
 
-	void picks_race(Banner banner, Badge bad);
+	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void conquers(Region* &region);
 	void scores();
 };

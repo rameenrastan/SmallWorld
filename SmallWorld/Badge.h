@@ -5,13 +5,19 @@ using namespace std;
 
 class Badge
 {
-private:
-	string badgeName;
+
 public:
+	enum Power {ALCHEMIST, BERSERK, BIVOUACKING, COMMANDO, DIPLOMAT, DRAGONMASTER, FLYING, FOREST, FORTIFIED, HEROIC, HILL, MERCHANT, MOUNTED,PILLAGING,SEAFARING,SPIRIT,STOUT,SWAMP,UNDERWORLD,WEALTHY};
 	Badge();
-	Badge(string);
+	Badge(string, Power);
 	~Badge();
 
 	string getBadge();
+	int getBadgeType();
+
+private:
+	Power badgeType;
+	string badgeName;
 };
+
 
