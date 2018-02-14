@@ -150,6 +150,7 @@
     <ClInclude Include="Badge.h" />
     <ClInclude Include="Banner.h" />
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="GameDeck.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Player.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Badge.cpp" />
     <ClCompile Include="Banner.cpp" />
     <ClCompile Include="Dice.cpp" />
+    <ClCompile Include="GameDeck.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -5,13 +5,21 @@ using namespace std;
 
 class Banner
 {
-private:
-	string bannerName;
+	
+
 public:
+	enum Race {AMAZONS,DWARVES,ELVES,GHOULS,RATMEN,SKELETONS,SORCERERS,TRITONS,GIANTS,HALFLINGS,HUMANS,ORCS,TROLLS,WIZARDS};
+	
 	Banner();
-	Banner(string);
+	Banner(string, Race);
 	~Banner();
 
+	
 	string getBanner();
+	int getRaceType();
+
+private:
+	Race raceType;
+	string bannerName;
 };
 

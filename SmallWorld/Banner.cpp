@@ -6,9 +6,10 @@ Banner::Banner()
 {
 }
 
-Banner::Banner(string name)
+Banner::Banner(string name,Race race)
 {
 	bannerName = name;
+	raceType = race;
 }
 
 
@@ -20,3 +21,11 @@ string Banner::getBanner()
 {
 	return bannerName;
 }
+
+int Banner::getRaceType()
+{
+	return raceType;
+}
+
+
+
