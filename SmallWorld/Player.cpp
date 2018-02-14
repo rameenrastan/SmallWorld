@@ -2,7 +2,6 @@
 #include "Player.h"
 #include <iostream>
 #include "Banner.h"
-#include "GameDeck.h"
 
 
 Player::Player()
@@ -218,6 +217,7 @@ void Player::conquers(Region* &region)
 				(*region).setNumTokens((*region).getNumTokens() + 2);
 				ownedRegions.push_back(region);
 				(*region).setOwner(this);
+				regionCount++;
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;

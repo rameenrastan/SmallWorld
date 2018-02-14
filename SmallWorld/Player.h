@@ -5,6 +5,7 @@
 #include "Badge.h"
 #include "Banner.h"
 #include "VictoryCoin.h"
+#include "GameDeck.h"
 
 using namespace std;
 
