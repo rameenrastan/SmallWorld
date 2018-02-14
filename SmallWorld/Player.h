@@ -33,6 +33,7 @@ public:
 	int getRegionCount();
 	int getTokenCount();
 	int getcoinCount();
+	bool checkRegionAdjacency(Region* region);
 
 	void picks_race(Banner banner, Badge bad);
 	void conquers(Region* &region);

@@ -40,6 +40,26 @@ int Player::getcoinCount()
 	return coinCount;
 }
 
+bool Player::checkRegionAdjacency(Region * region)
+{
+	for (int i = 0; i < ownedRegions.size(); i++)
+	{
+		for (int j = 0; j < (*(ownedRegions[i])).getNeighbors().size(); j++)
+		{
+			
+			if ((*(*(ownedRegions[i])).getNeighbors()[j]).getRegionName() == (*region).getRegionName())
+			{
+				cout << "This region is adjacent to one of this players owned regions" << endl;
+				return true;
+			}
+
+		}
+	}
+
+	cout << "This region is not adjacent to one of this players owned regions" << endl;
+	return false;
+}
+
 void Player::picks_race(Banner banner, Badge bad)
 {
 	race.push_back(banner);

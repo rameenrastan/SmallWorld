@@ -22,6 +22,5 @@ public:
 	Region();
 	Region(string name);
 	~Region();
-	
 };
 
