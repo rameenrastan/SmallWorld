@@ -10,6 +10,7 @@ Player::Player()
 
 Player::Player(string name)
 {
+	Dice gameDice;
 	playerName = name;
 	regionCount = 0;
 	tokenCount = 0;
@@ -23,6 +24,16 @@ Player::~Player()
 string Player::getPlayerName()
 {
 	return playerName;
+}
+
+int Player::reinforcementRoll()
+{
+	return gameDice.reinforcementRoll();
+}
+
+void Player::displayRollPercentages()
+{
+	gameDice.displayRollPercentages();
 }
 
 int Player::getRegionCount()
