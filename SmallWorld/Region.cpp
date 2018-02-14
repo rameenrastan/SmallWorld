@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Region.h"
 
-
 Region::Region()
 {
 }
@@ -9,17 +8,11 @@ Region::Region()
 Region::Region(string name)
 {
 	regionName = name;
-	owner = "none";
 	numTokens = 0;
 }
 
 Region::~Region()
 {
-}
-
-void Region::setOwner(string playerName)
-{
-	playerName = owner;
 }
 
 string Region::getRegionName() const
@@ -30,6 +23,26 @@ string Region::getRegionName() const
 int Region::getNumTokens() const
 {
 	return numTokens;
+}
+
+bool Region::hasMountain()
+{
+	return mountain;
+}
+
+bool Region::hasLostTribe()
+{
+	return lostTribe;
+}
+
+void Region::setOwned(bool o)
+{
+	owned = o;
+}
+
+bool Region::isOwned()
+{
+	return owned;
 }
 
 void Region::setRegionName(string name)
@@ -47,12 +60,27 @@ void Region::addNeighbor(Region* &r)
 	neighbors.push_back(r);
 }
 
+void Region::eliminateMountain()
+{
+	mountain = false;
+}
+
+void Region::eliminateLostTribe()
+{
+	lostTribe = false;
+}
+
+void Region::setOwner(Player* const & player)
+{
+	owner = player;
+}
+
 vector<Region*> Region::getNeighbors() const
 {
 	return neighbors;
 }
 
-string Region::getOwner() const
+Player* Region::getOwner() const
 {
 	return owner;
 }

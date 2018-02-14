@@ -70,6 +70,68 @@ void Player::picks_race(Banner banner, Badge bad)
 
 void Player::conquers(Region* &region)
 {
-	ownedRegions.push_back(region);
-	regionCount++;
+	if (checkRegionAdjacency(region)) {
+		if ((*region).hasMountain())
+		{
+			if (tokenCount > 2) {
+				ownedRegions.push_back(region);
+				tokenCount = tokenCount - 3;
+				(*region).eliminateMountain();
+				(*region).setOwned(true);
+				(*region).setNumTokens(3);
+				(*region).setOwner(this);
+				regionCount++;
+			}
+			else {
+				cout << "You do not have enough tokens to conquer this region!" << endl;
+			}
+		}
+		else if ((*region).hasLostTribe())
+		{
+			if (tokenCount > 2) {
+				ownedRegions.push_back(region);
+				tokenCount = tokenCount - 3;
+				(*region).eliminateLostTribe();
+				(*region).setOwned(true);
+				(*region).setNumTokens(3);
+				(*region).setOwner(this);
+				regionCount++;
+			}
+			else {
+				cout << "You do not have enough tokens to conquer this region!" << endl;
+			}
+		}
+		else if ((*region).isOwned())
+		{
+			if (tokenCount >= (*((*region).getOwner())).getTokenCount() + 2)
+			{
+				tokenCount = tokenCount - 2;
+				(*region).setNumTokens((*region).getNumTokens() + 2);
+				ownedRegions.push_back(region);
+				(*region).setOwner(this);
+			}
+			else {
+				cout << "You do not have enough tokens to conquer this region!" << endl;
+			}
+		}
+		else if (!(*region).isOwned())
+		{
+			if (tokenCount > 1)
+			{
+				ownedRegions.push_back(region);
+				tokenCount = tokenCount - 2;
+				(*region).setOwned(true);
+				(*region).setNumTokens(2);
+				(*region).setOwner(this);
+				regionCount++;
+			}
+			else {
+				cout << "You do not have enough tokens to conquer this region!" << endl;
+			}
+		}
+	}
+	else {
+
+		cout << "This region cannot be conquered by this player." << endl;
+	}
 }
