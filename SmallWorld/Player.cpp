@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include <iostream>
-#include "Banner.h"
-#include "GameDeck.h"
+
 
 
 Player::Player()
@@ -68,46 +67,59 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 	switch (banner.getRaceType()) {  
 		case 0: //AMAZONS
 			tokenCount+=6;
-		(*gamedeck).getAmazonToken() - 6;
+			(*gamedeck).setAmazonToken(6);
 			break;
 		case 1: //DWARVES
 			tokenCount += 3;
+			(*gamedeck).setDwarfToken(3);
 			break;
 		case 2: //ELVES
 			tokenCount += 6;
+			(*gamedeck).setElfToken(6);
 			break;
 		case 3: //GHOULS
 			tokenCount += 5;
+			(*gamedeck).setGhoulToken(5);
 			break;
 		case 4: //RATMEN
 			tokenCount += 8;
+			(*gamedeck).setRatToken(8);
 			break;
 		case 5: //SKELETONS
 			tokenCount += 6;
+			(*gamedeck).setSkeletonToken(6);
 			break;
 		case 6: //SORCERERS
 			tokenCount += 5;
+			(*gamedeck).setSorcererToken(5);
 			break;
 		case 7: //TRITONS
 			tokenCount += 6;
+			(*gamedeck).setTritonToken(6);
 			break;
 		case 8: //GIANTS
 			tokenCount += 6;
+			(*gamedeck).setGiantToken(6);
 			break;
 		case 9: //HALFLINGS
 			tokenCount += 6;
+			(*gamedeck).setHalflingToken(6);
 			break;
 		case 10: //HUMANS
 			tokenCount += 5;
+			(*gamedeck).setHumanToken(5);
 			break;
 		case 11: //ORCS
 			tokenCount += 5;
+			(*gamedeck).setOrcToken(5);
 			break;
 		case 12: //TROLLS
 			tokenCount += 5;
+			(*gamedeck).setTrollToken(5);
 			break;
 		case 13: //WIZARDS
 			tokenCount += 5;
+			(*gamedeck).setWizardToken(5);
 			break;
 	}
 	switch (bad.getBadgeType()) {
@@ -173,8 +185,6 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 			break;
 
 	}
-	//cout<<banner.getBanner();
-	//cout<<bad.getBadge();
 }
 
 void Player::conquers(Region* &region)
