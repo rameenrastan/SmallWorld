@@ -5,6 +5,7 @@
 #include "Badge.h"
 #include "Banner.h"
 #include "VictoryCoin.h"
+#include "Dice.h"
 #include "GameDeck.h"
 
 using namespace std;
@@ -13,6 +14,7 @@ class Player
 {
 private:
 	string playerName;
+	Dice gameDice;
 	vector<Region*> ownedRegions;
 	vector<Token*> ownedTokens;
 	vector<VictoryCoin*> ownedCoins;
@@ -31,6 +33,8 @@ public:
 	~Player();
 
 	string getPlayerName();
+	int reinforcementRoll();
+	void displayRollPercentages();
 	int getRegionCount();
 	int getTokenCount();
 	int getcoinCount();
