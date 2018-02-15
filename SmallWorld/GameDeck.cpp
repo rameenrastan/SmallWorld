@@ -5,6 +5,7 @@
 
 GameDeck::GameDeck()
 {
+	gameCoin = 515;
 	amazonToken = 15;
 	dwarfToken = 8;
 	elfToken = 11;
@@ -26,6 +27,13 @@ GameDeck::GameDeck()
 
 GameDeck::~GameDeck()
 {
+}
+
+int GameDeck::getGameCoin(){
+	return gameCoin;
+}
+void GameDeck::setGameCoin(int decrement){
+	gameCoin -= decrement;
 }
 
 int GameDeck::getAmazonToken() {

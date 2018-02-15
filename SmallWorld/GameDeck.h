@@ -6,12 +6,16 @@ using namespace std;
 class GameDeck
 {
 private:
+	int gameCoin;
 	int amazonToken, dwarfToken , elfToken, ghoulToken, ratToken, skeletonToken, sorcererToken, tritonToken, giantToken, halflingToken, humanToken, orcToken, trollToken, wizardToken;
 
 public:
 	GameDeck();
 
 	~GameDeck();
+
+	int getGameCoin();
+	void setGameCoin(int);
 	
 	int getAmazonToken();
 	void setAmazonToken(int);

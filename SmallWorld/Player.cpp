@@ -15,6 +15,7 @@ Player::Player(string name)
 	regionCount = 0;
 	tokenCount = 0;
 	coinCount = 5;
+	
 }
 
 Player::~Player()
@@ -25,6 +26,20 @@ string Player::getPlayerName()
 {
 	return playerName;
 }
+
+vector<Region*> Player::getOwnedRegions()
+{
+	return ownedRegions;
+}
+
+void Player::setOwnedRegions(Region* r1, Region* r2)
+{
+	ownedRegions.push_back(r1);
+	ownedRegions.push_back(r2);
+
+}
+
+
 
 int Player::reinforcementRoll()
 {
@@ -263,5 +278,87 @@ void Player::conquers(Region* &region)
 	else {
 
 		cout << "This region cannot be conquered by this player." << endl;
+	}
+}
+
+//allocates victory coins to players based on number of regions owned and race abilities
+
+void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
+{
+	for (int i = 0; i < ownedRegions.size(); i++) {
+		coinCount++;
+		(*gamedeck).setGameCoin(1);
+		switch (banner.getRaceType()) {
+			case 1: //DWARVES
+				if ((*ownedRegions[i]).hasMine()) {   //give 1 extra coin for each mine region a dwarf owns
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+				break;
+			case 10: //HUMANS
+				if ((*ownedRegions[i]).isFarmland()) { //give 1 extra coin for each farm region a human owns
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+				break;
+			case 11: //ORCS
+				//1 extra coin for each non empty region conquered
+				break;
+			case 13: //WIZARDS
+				if ((*ownedRegions[i]).isMagic()) { //give 1 extra coin for each magic region a wizard owns
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+		}
+	}
+	switch (bad.getBadgeType()) {
+		case 0: //ALCHEMIST
+			coinCount += 2;   //gives 2 extra coins per turn 
+			(*gamedeck).setGameCoin(2);
+			break;
+		case 6: //FLYING
+			tokenCount += 5;
+			break;
+		case 7: //FOREST
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isForest()) { //give 1 extra coin for each forest region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 8: //FORTIFIED
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isFortress()) { //give 1 extra coin for each fortress on a region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 10: //HILL
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isHill()) { //give 1 extra coin for each hill region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 11: //MERCHANT
+			coinCount += ownedRegions.size();  //give 1 extra coin for each region owned
+			break;
+		case 13: //PILLAGING
+			//1 extra coin for each non empty region conquered
+			break;
+		case 17: //SWAMP
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isSwamp()) { //give 1 extra coin for every swamp region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 19: //WEALTHY
+			//should receive 7 extra coins on only first round active
+			break;
 	}
 }

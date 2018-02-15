@@ -33,6 +33,8 @@ public:
 	~Player();
 
 	string getPlayerName();
+	vector<Region*> getOwnedRegions();
+	void setOwnedRegions(Region* r1,Region* r2);
 	int reinforcementRoll();
 	void displayRollPercentages();
 	int getRegionCount();
@@ -42,6 +44,6 @@ public:
 
 	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void conquers(Region* &region);
-	void scores();
+	void scores(Banner banner, Badge bad, GameDeck*const &gamedeck);
 };
 
