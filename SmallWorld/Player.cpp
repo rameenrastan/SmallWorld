@@ -10,12 +10,10 @@ Player::Player()
 
 Player::Player(string name)
 {
-	Dice gameDice;
 	playerName = name;
 	regionCount = 0;
 	tokenCount = 0;
 	coinCount = 5;
-	
 }
 
 Player::~Player()
@@ -27,28 +25,14 @@ string Player::getPlayerName()
 	return playerName;
 }
 
-vector<Region*> Player::getOwnedRegions()
+int Player::reinforcementRoll(Dice* dice)
 {
-	return ownedRegions;
+	return (*dice).reinforcementRoll();
 }
 
-void Player::setOwnedRegions(Region* r1, Region* r2)
+void Player::displayRollPercentages(Dice* dice)
 {
-	ownedRegions.push_back(r1);
-	ownedRegions.push_back(r2);
-
-}
-
-
-
-int Player::reinforcementRoll()
-{
-	return gameDice.reinforcementRoll();
-}
-
-void Player::displayRollPercentages()
-{
-	gameDice.displayRollPercentages();
+	(*dice).displayRollPercentages();
 }
 
 int Player::getRegionCount()
@@ -435,3 +419,4 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 			break;
 	}
 }
+

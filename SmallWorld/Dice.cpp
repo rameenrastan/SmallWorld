@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Dice.h"
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <stdlib.h>     
+#include <time.h>       
 #include <iostream>
 
 
@@ -37,42 +37,48 @@ int Dice::reinforcementRoll()
 
 	srand(time(NULL)); 
 
-	int value = rand() % 6 + 1;
-	switch (value) {
+	switch (rand() % 6 + 1) {
 		case 1:
 			numZeroRolls++;
 			numTotalRolls++;
 			percentZeroRolls = ((double)numZeroRolls / (double)numTotalRolls) * 100;
+			cout << "Player rolled a 0." << endl;
 			return 0;
 
 		case 2:
 			numZeroRolls++;
 			numTotalRolls++;
 			percentZeroRolls = ((double)numZeroRolls / (double)numTotalRolls) * 100;
+			cout << "Player rolled a 0." << endl;
 			return 0;
 
 		case 3:
 			numZeroRolls++;
 			numTotalRolls++;
 			percentZeroRolls = ((double)numZeroRolls / (double)numTotalRolls) * 100;
+			cout << "Player rolled a 0." << endl;
 			return 0;
 
 		case 4:
 			numOneRolls++;
 			numTotalRolls++;
 			percentOneRolls = ((double)numOneRolls / (double)numTotalRolls) * 100;
+			cout << "Player rolled a 1." << endl;
 			return 1;
 
 		case 5:
 			numTwoRolls++;
 			numTotalRolls++;
 			percentTwoRolls = ((double)numTwoRolls / (double)numTotalRolls) * 100;
+			cout << "Player rolled  a 2." << endl;
 			return 2;
 
 		case 6:
 			numThreeRolls++;
 			numTotalRolls++;
 			percentThreeRolls = ((double)numThreeRolls / (double)numTotalRolls) * 100;
+			cout << "Player rolled a 3." << endl;
 			return 3;
 	}
 }
+

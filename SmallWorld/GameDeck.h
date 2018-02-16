@@ -7,6 +7,7 @@ class GameDeck
 {
 private:
 	int gameCoin;
+	int numMountains;
 	int amazonToken, dwarfToken , elfToken, ghoulToken, ratToken, skeletonToken, sorcererToken, tritonToken, giantToken, halflingToken, humanToken, orcToken, trollToken, wizardToken;
 
 public:
