@@ -41,9 +41,9 @@ bool Region::hasMine()
 	return mine;
 }
 
-void Region::setMine(bool m)
+void Region::setMine(bool mineReg)
 {
-	mine = m;
+	mine = mineReg;
 }
 
 bool Region::isFarmland()
@@ -51,9 +51,9 @@ bool Region::isFarmland()
 	return farmland;
 }
 
-void Region::setFarmland(bool f)
+void Region::setFarmland(bool farm)
 {
-	farmland = f;
+	farmland = farm;
 }
 
 bool Region::isMagic()
@@ -61,9 +61,9 @@ bool Region::isMagic()
 	return magic;
 }
 
-void Region::setMagic(bool mag)
+void Region::setMagic(bool magicReg)
 {
-	magic = mag;
+	magic = magicReg;
 }
 
 bool Region::isForest()
@@ -71,9 +71,9 @@ bool Region::isForest()
 	return forest;
 }
 
-void Region::setForest(bool fo)
+void Region::setForest(bool forestReg)
 {
-	forest = fo;
+	forest = forestReg;
 }
 
 void Region::setOwned(bool o)
@@ -96,9 +96,9 @@ bool Region::isHill()
 	return hill;
 }
 
-void Region::setHill(bool h)
+void Region::setHill(bool hillReg)
 {
-	hill = h;
+	hill = hillReg;
 }
 
 bool Region::isSwamp()
@@ -106,9 +106,9 @@ bool Region::isSwamp()
 	return swamp;
 }
 
-void Region::setSwamp(bool s)
+void Region::setSwamp(bool swampReg)
 {
-	swamp = s;
+	swamp = swampReg;
 }
 
 bool Region::isOwned()

@@ -7,7 +7,7 @@ class GameDeck
 {
 private:
 	int gameCoin;
-	int numMountains;
+	int numMountain, numFortress,numLair,numEncampment,numHole,numHero,numDragon;
 	int amazonToken, dwarfToken , elfToken, ghoulToken, ratToken, skeletonToken, sorcererToken, tritonToken, giantToken, halflingToken, humanToken, orcToken, trollToken, wizardToken;
 
 public:
@@ -17,6 +17,21 @@ public:
 
 	int getGameCoin();
 	void setGameCoin(int);
+
+	int getNumMountain();
+	void setNumMountain(int);
+	int getNumFortress();
+	void setNumFortress(int);
+	int getNumLair();
+	void setNumLair(int);
+	int getNumEncampment();
+	void setNUmEncampment(int);
+	int getNumHole();
+	void setNumHole(int);
+	int getNumHero();
+	void setNumHero(int);
+	int getNumDragon();
+	void setNumDragon(int);
 	
 	int getAmazonToken();
 	void setAmazonToken(int);

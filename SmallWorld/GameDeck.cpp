@@ -36,6 +36,76 @@ void GameDeck::setGameCoin(int decrement){
 	gameCoin -= decrement;
 }
 
+int GameDeck::getNumMountain()
+{
+	return numMountain;
+}
+
+void GameDeck::setNumMountain(int mountainCount)
+{
+	numMountain = mountainCount;
+}
+
+int GameDeck::getNumFortress()
+{
+	return numFortress;
+}
+
+void GameDeck::setNumFortress(int fortressCount)
+{
+	numFortress = fortressCount;
+}
+
+int GameDeck::getNumLair()
+{
+	return numLair;
+}
+
+void GameDeck::setNumLair(int lairCount)
+{
+	numLair = lairCount;
+}
+
+int GameDeck::getNumEncampment()
+{
+	return numEncampment;
+}
+
+void GameDeck::setNUmEncampment(int encampCount)
+{
+	numEncampment = encampCount;
+}
+
+int GameDeck::getNumHole()
+{
+	return numHole;
+}
+
+void GameDeck::setNumHole(int holeCount)
+{
+	numHole = holeCount;
+}
+
+int GameDeck::getNumHero()
+{
+	return numHero;
+}
+
+void GameDeck::setNumHero(int heroCount)
+{
+	numHero = heroCount;
+}
+
+int GameDeck::getNumDragon()
+{
+	return numDragon;
+}
+
+void GameDeck::setNumDragon(int dragonCount)
+{
+	numDragon = dragonCount;
+}
+
 int GameDeck::getAmazonToken() {
 	return amazonToken;
 }
