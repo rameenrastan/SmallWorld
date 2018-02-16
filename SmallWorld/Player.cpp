@@ -70,10 +70,17 @@ bool Player::checkRegionAdjacency(Region * region)
 	return false;
 }
 
+
+/* picks_race: players pick their banner and badge, allocating 
+   appropriate amount of tokens to them and updating gamedeck tokens */
+
 void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 {
+ 
 	race.push_back(banner);
 	badge.push_back(bad);
+	int storage = 0; // used to store token value of tokens that a badge gives out
+	
 	switch (banner.getRaceType()) {  
 		case 0: //AMAZONS
 			tokenCount+=6;
@@ -135,66 +142,130 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 	switch (bad.getBadgeType()) {
 		case 0: //ALCHEMIST
 			tokenCount += 4;
+			storage += 4;
 			break;
 		case 1: //BERSERK
 			tokenCount += 4;
+			storage += 4;
 			break;
 		case 2: //BIVOUACKING
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 3: //COMMANDO
 			tokenCount += 4;
+			storage += 4;
 			break;
 		case 4: //DIPLOMAT
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 5: //DRAGONMASTER
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 6: //FLYING
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 7: //FOREST
 			tokenCount += 4;
+			storage += 4;
 			break;
 		case 8: //FORTIFIED
 			tokenCount += 3;
+			storage += 3;
 			break;
 		case 9: //HEROIC
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 10: //HILL
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 11: //MERCHANT
 			tokenCount += 2;
+			storage += 2;
 			break;
 		case 12: //MOUNTED
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 13: //PILLAGING
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 14: //SEAFARING
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 15: //SPIRIT
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 16: //STOUT
 			tokenCount += 4;
+			storage += 4;
 			break;
 		case 17: //SWAMP
 			tokenCount += 4;
+			storage += 4;
 			break;
 		case 18: //UNDERWORLD
 			tokenCount += 5;
+			storage += 5;
 			break;
 		case 19: //WEALTHY
 			tokenCount += 4;
+			storage += 4;
 			break;
-
+		}
+	switch (banner.getRaceType()) {
+		case 0: //AMAZONS
+			(*gamedeck).setAmazonToken(storage);
+			break;
+		case 1: //DWARVES
+			(*gamedeck).setDwarfToken(storage);
+			break;
+		case 2: //ELVES
+			(*gamedeck).setElfToken(storage);
+			break;
+		case 3: //GHOULS
+			(*gamedeck).setGhoulToken(storage);
+			break;
+		case 4: //RATMEN	
+			(*gamedeck).setRatToken(storage);
+			break;
+		case 5: //SKELETONS
+			(*gamedeck).setSkeletonToken(storage);
+			break;
+		case 6: //SORCERERS
+			(*gamedeck).setSorcererToken(storage);
+			break;
+		case 7: //TRITONS
+			(*gamedeck).setTritonToken(storage);
+			break;
+		case 8: //GIANTS
+			(*gamedeck).setGiantToken(storage);
+			break;
+		case 9: //HALFLINGS
+			(*gamedeck).setHalflingToken(storage);
+			break;
+		case 10: //HUMANS
+			(*gamedeck).setHumanToken(storage);
+			break;
+		case 11: //ORCS
+			(*gamedeck).setOrcToken(storage);
+			break;
+		case 12: //TROLLS
+			(*gamedeck).setTrollToken(storage);
+			break;
+		case 13: //WIZARDS
+			(*gamedeck).setWizardToken(storage);
+				break;
 	}
+	
 }
 
 void Player::conquers(Region* &region)
@@ -268,3 +339,88 @@ void Player::conquers(Region* &region)
 		cout << "This region cannot be conquered by this player, it is not adjacent to your regions!." << endl;
 	}
 }
+
+//allocates victory coins to players based on number of regions owned and race abilities
+
+void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
+{
+	for (int i = 0; i < ownedRegions.size(); i++) {
+		coinCount++;
+		(*gamedeck).setGameCoin(1);
+		switch (banner.getRaceType()) {
+			case 1: //DWARVES
+				if ((*ownedRegions[i]).hasMine()) {   //give 1 extra coin for each mine region a dwarf owns
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+				break;
+			case 10: //HUMANS
+				if ((*ownedRegions[i]).isFarmland()) { //give 1 extra coin for each farm region a human owns
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+				break;
+			case 11: //ORCS
+				//1 extra coin for each non empty region conquered
+				break;
+			case 13: //WIZARDS
+				if ((*ownedRegions[i]).isMagic()) { //give 1 extra coin for each magic region a wizard owns
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+		}
+	}
+	switch (bad.getBadgeType()) {
+		case 0: //ALCHEMIST
+			coinCount += 2;   //gives 2 extra coins per turn 
+			(*gamedeck).setGameCoin(2);
+			break;
+		case 6: //FLYING
+			tokenCount += 5;
+			break;
+		case 7: //FOREST
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isForest()) { //give 1 extra coin for each forest region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 8: //FORTIFIED
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isFortress()) { //give 1 extra coin for each fortress on a region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 10: //HILL
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isHill()) { //give 1 extra coin for each hill region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 11: //MERCHANT
+			for (int i = 0; i < ownedRegions.size(); i++) {  //give 1 extra coin for each region owned
+				coinCount++;
+			}
+			break;
+		case 13: //PILLAGING
+			//1 extra coin for each non empty region conquered
+			break;
+		case 17: //SWAMP
+			for (int i = 0; i < ownedRegions.size(); i++) {
+				if ((*ownedRegions[i]).isSwamp()) { //give 1 extra coin for every swamp region owned
+					coinCount++;
+					(*gamedeck).setGameCoin(1);
+				}
+			}
+			break;
+		case 19: //WEALTHY
+			//should receive 7 extra coins on only first round active
+			break;
+	}
+}
+
