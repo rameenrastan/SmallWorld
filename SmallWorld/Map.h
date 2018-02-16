@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/*
+Implements the functionality of the Small World Map (functioning as a connected graph).
+*/
 class Map
 {
 private:

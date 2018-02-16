@@ -3,6 +3,9 @@
 
 using namespace std;
 
+/*
+This class stores all the pieces of the game deck.
+*/
 class GameDeck
 {
 private:

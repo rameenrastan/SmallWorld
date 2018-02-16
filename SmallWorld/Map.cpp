@@ -3,18 +3,26 @@
 #include <algorithm>
 #include <iostream>
 
-
+/*
+Adds a border between two regions (i.e. connects two regions by forming an edge between them on the graph)
+*/
 void Map::addBorder(Region * r1, Region * r2)
 {
 	(*r1).addNeighbor(r2);
 	(*r2).addNeighbor(r1);
 }
 
+/*
+Adds a region (node) to  the map (graph).
+*/
 void Map::addRegion(Region* r)
 {
 	regions.push_back(r);
 }
 
+/*
+Performs a Depth-First Search on the map using recursion  to verify if the map (graph) is connected.
+*/
 void Map::dfsTraversal(Region & currentNode)
 {
 	visited.push_back(currentNode.getRegionName());
@@ -30,6 +38,9 @@ void Map::dfsTraversal(Region & currentNode)
 	}
 }
 
+/*
+Checks if the given Map is connected by performing a DFS using the dfsTraversal function (starts at the first node on the graph).
+*/
 bool Map::isConnected()
 {
 	cout << "Verifying if map is valid (if its a connected graph) ..." << endl;

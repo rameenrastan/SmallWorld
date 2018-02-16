@@ -6,6 +6,9 @@ using namespace std;
 
 class Player;
 
+/*
+Implements the functionality of a region on the map (acts as a node on the map's graph).
+*/
 class Region
 {
 private:

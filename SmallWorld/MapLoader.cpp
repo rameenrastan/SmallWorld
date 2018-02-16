@@ -3,6 +3,10 @@
 #include <string>
 #include <iostream>
 
+/*
+Loads a map object by reading a .map text file.
+Checks if the map is valid (i.e. if it forms a connected map) before loading it as a map object.
+*/
 Map MapLoader::loadMap(string mapFileLocation)
 {
 	ifstream mapFile;
