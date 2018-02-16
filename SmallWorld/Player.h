@@ -10,6 +10,9 @@
 
 using namespace std;
 
+/*
+Implements the functionality of a player playing the Small World game.
+*/
 class Player
 {
 private:

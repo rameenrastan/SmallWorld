@@ -25,11 +25,17 @@ string Player::getPlayerName()
 	return playerName;
 }
 
+/*
+Allows a player to request a reinforcement dice roll.
+*/
 int Player::reinforcementRoll(Dice* dice)
 {
 	return (*dice).reinforcementRoll();
 }
 
+/*
+Displays the roll percentages of the dice rolled by a player.
+*/
 void Player::displayRollPercentages(Dice* dice)
 {
 	(*dice).displayRollPercentages();
@@ -50,6 +56,9 @@ int Player::getcoinCount()
 	return coinCount;
 }
 
+/*
+Checks if a given region is adjacent to one of the player's owned regions.
+*/
 bool Player::checkRegionAdjacency(Region * region)
 {
 	for (int i = 0; i < ownedRegions.size(); i++)
@@ -266,6 +275,11 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 	
 }
 
+/*
+Called when a player attempts to conquer a region.
+Checks the type of region (if it has a lost tribe, is already conquered, etc.) and determines if the user has sufficient number of tokens to conquer it.
+Also checks if the region is adjacent to one of the user's currently owned regions.
+*/
 void Player::conquers(Region* &region)
 {
 	if (checkRegionAdjacency(region) || ownedRegions.size() == 0) {

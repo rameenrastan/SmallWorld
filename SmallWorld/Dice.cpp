@@ -23,6 +23,9 @@ Dice::~Dice()
 {
 }
 
+/*
+Displays the percentages of all the individual values rolled up to now.
+*/
 void Dice::displayRollPercentages()
 {
 	cout << "Roll Percentages of this dice:" << endl;
@@ -32,6 +35,10 @@ void Dice::displayRollPercentages()
 	cout << "Percent of three value rolls (side with 3 dots): " << percentThreeRolls << endl;
 }
 
+/*
+Rolls a dice returning values 0 to 3 (0 has 3 sides, 1 to 3 each have 1 side, out of 6 possible sides). 
+Used for reinforcement during the final conquest attempt in a turn.
+*/
 int Dice::reinforcementRoll()
 {
 

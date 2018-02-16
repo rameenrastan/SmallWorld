@@ -2,6 +2,10 @@
 
 using namespace std;
 
+
+/*
+This class implements the Reinforcements Die functionality.
+*/
 class Dice
 {
 
