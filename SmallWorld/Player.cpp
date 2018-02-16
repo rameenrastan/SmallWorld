@@ -59,14 +59,12 @@ bool Player::checkRegionAdjacency(Region * region)
 			
 			if ((*(*(ownedRegions[i])).getNeighbors()[j]).getRegionName() == (*region).getRegionName())
 			{
-				cout << "This region is adjacent to one of this players owned regions" << endl;
 				return true;
 			}
 
 		}
 	}
 
-	cout << "This region is not adjacent to one of this players owned regions" << endl;
 	return false;
 }
 
@@ -336,7 +334,7 @@ void Player::conquers(Region* &region)
 	}
 	else {
 
-		cout << "This region cannot be conquered by this player, it is not adjacent to your regions!." << endl;
+		cout << (*region).getRegionName() << " cannot be conquered by this player, it is not adjacent to your regions!." << endl;
 	}
 }
 
