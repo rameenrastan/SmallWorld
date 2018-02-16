@@ -14,7 +14,6 @@ class Player
 {
 private:
 	string playerName;
-	Dice gameDice;
 	vector<Region*> ownedRegions;
 	vector<Token*> ownedTokens;
 	vector<VictoryCoin*> ownedCoins;
@@ -33,8 +32,8 @@ public:
 	~Player();
 
 	string getPlayerName();
-	int reinforcementRoll();
-	void displayRollPercentages();
+	int reinforcementRoll(Dice* dice);
+	void displayRollPercentages(Dice* dice);
 	int getRegionCount();
 	int getTokenCount();
 	int getcoinCount();
