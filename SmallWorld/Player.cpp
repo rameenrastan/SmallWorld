@@ -199,7 +199,7 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 
 void Player::conquers(Region* &region)
 {
-	if (checkRegionAdjacency(region)) {
+	if (checkRegionAdjacency(region) || ownedRegions.size() == 0) {
 		if ((*region).hasMountain())
 		{
 			if (tokenCount > 2) {
@@ -210,6 +210,7 @@ void Player::conquers(Region* &region)
 				(*region).setNumTokens(3);
 				(*region).setOwner(this);
 				regionCount++;
+				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;
@@ -225,6 +226,7 @@ void Player::conquers(Region* &region)
 				(*region).setNumTokens(3);
 				(*region).setOwner(this);
 				regionCount++;
+				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;
@@ -238,6 +240,7 @@ void Player::conquers(Region* &region)
 				(*region).setNumTokens((*region).getNumTokens() + 2);
 				ownedRegions.push_back(region);
 				(*region).setOwner(this);
+				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;
@@ -253,6 +256,7 @@ void Player::conquers(Region* &region)
 				(*region).setNumTokens(2);
 				(*region).setOwner(this);
 				regionCount++;
+				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;
@@ -261,6 +265,6 @@ void Player::conquers(Region* &region)
 	}
 	else {
 
-		cout << "This region cannot be conquered by this player." << endl;
+		cout << "This region cannot be conquered by this player, it is not adjacent to your regions!." << endl;
 	}
 }
