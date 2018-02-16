@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Player.h"
-#include <iostream>
 
 
 
@@ -20,10 +19,10 @@ Player::~Player()
 {
 }
 
-string Player::getPlayerName()
-{
+string Player::getPlayerName(){
 	return playerName;
 }
+
 
 /*
 Allows a player to request a reinforcement dice roll.
@@ -41,18 +40,15 @@ void Player::displayRollPercentages(Dice* dice)
 	(*dice).displayRollPercentages();
 }
 
-int Player::getRegionCount()
-{
+int Player::getRegionCount(){
 	return regionCount;
 }
 
-int Player::getTokenCount()
-{
+int Player::getTokenCount(){
 	return tokenCount;
 }
 
-int Player::getcoinCount()
-{
+int Player::getCoinCount(){
 	return coinCount;
 }
 
@@ -65,21 +61,20 @@ bool Player::checkRegionAdjacency(Region * region)
 	{
 		for (int j = 0; j < (*(ownedRegions[i])).getNeighbors().size(); j++)
 		{
-			
 			if ((*(*(ownedRegions[i])).getNeighbors()[j]).getRegionName() == (*region).getRegionName())
 			{
 				return true;
 			}
-
 		}
 	}
-
 	return false;
 }
 
 
-/* picks_race: players pick their banner and badge, allocating 
-   appropriate amount of tokens to them and updating gamedeck tokens */
+/* 
+players pick their banner and badge, allocating appropriate 
+amount of tokens to them and updating gamedeck tokens
+*/
 
 void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 {
@@ -88,7 +83,7 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 	badge.push_back(bad);
 	int storage = 0; // used to store token value of tokens that a badge gives out
 	
-	switch (banner.getRaceType()) {  
+	switch (banner.getRaceType()) {  //allocating tokens based on race
 		case 0: //AMAZONS
 			tokenCount+=6;
 			(*gamedeck).setAmazonToken(6);
@@ -146,7 +141,7 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 			(*gamedeck).setWizardToken(5);
 			break;
 	}
-	switch (bad.getBadgeType()) {
+	switch (bad.getBadgeType()) {	//allocating tokens based on badge type
 		case 0: //ALCHEMIST
 			tokenCount += 4;
 			storage += 4;
@@ -228,7 +223,7 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 			storage += 4;
 			break;
 		}
-	switch (banner.getRaceType()) {
+	switch (banner.getRaceType()) {  //using the stored value of the prev switch case to update game deck tokens based on race type
 		case 0: //AMAZONS
 			(*gamedeck).setAmazonToken(storage);
 			break;
@@ -352,14 +347,15 @@ void Player::conquers(Region* &region)
 	}
 }
 
-//allocates victory coins to players based on number of regions owned and race abilities
-
+/*
+allocates victory coins to players based on number of regions owned and race abilities
+*/
 void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 {
-	for (int i = 0; i < ownedRegions.size(); i++) {
-		coinCount++;
-		(*gamedeck).setGameCoin(1);
-		switch (banner.getRaceType()) {
+	for (int i = 0; i < ownedRegions.size(); i++) {   
+		coinCount++;	//give 1 coin for every region owned
+		(*gamedeck).setGameCoin(1);		
+		switch (banner.getRaceType()) {  //allocating victory coins based on race type
 			case 1: //DWARVES
 				if ((*ownedRegions[i]).hasMine()) {   //give 1 extra coin for each mine region a dwarf owns
 					coinCount++;
@@ -382,13 +378,10 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 				}
 		}
 	}
-	switch (bad.getBadgeType()) {
+	switch (bad.getBadgeType()) {  //allocating victory coins based on badge type
 		case 0: //ALCHEMIST
 			coinCount += 2;   //gives 2 extra coins per turn 
 			(*gamedeck).setGameCoin(2);
-			break;
-		case 6: //FLYING
-			tokenCount += 5;
 			break;
 		case 7: //FOREST
 			for (int i = 0; i < ownedRegions.size(); i++) {
@@ -434,5 +427,121 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 			//should receive 7 extra coins on only first round active
 			break;
 	}
+}
+
+/*
+Displays the information of the player. Name,race,badge,tokens,victory coins.
+*/
+void Player::summarySheet(Banner banner, Badge bad)
+{
+	cout << "Name: " << getPlayerName() << endl;
+	switch (banner.getRaceType()) {
+	case 0: //AMAZONS
+		cout << "Current race: AMAZONS" << endl;
+		break;
+	case 1: //DWARVES
+		cout << "Current race: DWARVES"<<endl;
+		break;
+	case 2: //ELVES
+		cout << "Current race: ELVES"<<endl;
+		break;
+	case 3: //GHOULS
+		cout << "Current race: GHOULS"<<endl;
+		break;
+	case 4: //RATMEN	
+		cout << "Current race: RATMEN" << endl;
+		break;
+	case 5: //SKELETONS
+		cout << "Current race: SKELETONS" << endl;
+		break;
+	case 6: //SORCERERS
+		cout << "Current race: SORCERORS" << endl;
+		break;
+	case 7: //TRITONS
+		cout << "Current race: TRITONS" << endl;
+		break;
+	case 8: //GIANTS
+		cout << "Current race: GIANTS" << endl;
+		break;
+	case 9: //HALFLINGS
+		cout << "Current race: HALFLINGS" << endl;
+		break;
+	case 10: //HUMANS
+		cout << "Current race: HUMANS" << endl;
+		break;
+	case 11: //ORCS
+		cout << "Current race: ORCS" << endl;
+		break;
+	case 12: //TROLLS
+		cout << "Current race: TROLLS" << endl;
+		break;
+	case 13: //WIZARDS
+		cout << "Current race: WIZARDS" << endl;
+		break;
+	}
+	switch (bad.getBadgeType()) {
+	case 0: //ALCHEMIST
+		cout << "Current badge: ALCHEMIST" << endl;
+		break;
+	case 1: //BERSERK
+		cout << "Current badge: BERSERK" << endl;
+		break;
+	case 2: //BIVOUACKING
+		cout << "Current badge: BIVOUACKING" << endl;
+		break;
+	case 3: //COMMANDO
+		cout << "Current badge: COMMANDO" << endl;
+		break;
+	case 4: //DIPLOMAT
+		cout << "Current badge: DIPLOMAT" << endl;
+		break;
+	case 5: //DRAGONMASTER
+		cout << "Current badge: DRAGONMASTER" << endl;
+		break;
+	case 6: //FLYING
+		cout << "Current badge: FLYING" << endl;
+		break;
+	case 7: //FOREST
+		cout << "Current badge: FOREST" << endl;
+		break;
+	case 8: //FORTIFIED
+		cout << "Current badge: FORTIFIED" << endl;
+		break;
+	case 9: //HEROIC
+		cout << "Current badge: HEROIC" << endl;
+		break;
+	case 10: //HILL
+		cout << "Current badge: HILL" << endl;
+		break;
+	case 11: //MERCHANT
+		cout << "Current badge: MERCHANT" << endl;
+		break;
+	case 12: //MOUNTED
+		cout << "Current badge: MOUNTED" << endl;
+		break;
+	case 13: //PILLAGING
+		cout << "Current badge: PILLAGING" << endl;
+		break;
+	case 14: //SEAFARING
+		cout << "Current badge: SEAFARING" << endl;
+		break;
+	case 15: //SPIRIT
+		cout << "Current badge: SPIRIT" << endl;
+		break;
+	case 16: //STOUT
+		cout << "Current badge: STOUT" << endl;
+		break;
+	case 17: //SWAMP
+		cout << "Current badge: SWAMP" << endl;
+		break;
+	case 18: //UNDERWORLD
+		cout << "Current badge: UNDERWORLD" << endl;
+		break;
+	case 19: //WEALTHY
+		cout << "Current badge: WEALTHY" << endl;
+		break;
+	}
+	cout << "Number of tokens available: "<< getTokenCount() << endl;
+	cout << "Number of victoy coins: " << getCoinCount() << endl;
 }
 

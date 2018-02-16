@@ -5,7 +5,20 @@
 
 GameDeck::GameDeck()
 {
+	//total victory coins
 	gameCoin = 515;
+
+	//total region pieces
+	numMountain = 9;
+	numFortress = 6;
+	numLair = 10;
+	numEncampment = 5;
+	numHole = 2;
+	numHero = 2;
+	numDragon = 1;
+	numLostTribe = 18;
+
+	//total race tokens
 	amazonToken = 15;
 	dwarfToken = 8;
 	elfToken = 11;
@@ -29,6 +42,8 @@ GameDeck::~GameDeck()
 {
 }
 
+//victory coin methods
+
 int GameDeck::getGameCoin(){
 	return gameCoin;
 }
@@ -36,13 +51,13 @@ void GameDeck::setGameCoin(int decrement){
 	gameCoin -= decrement;
 }
 
-int GameDeck::getNumMountain()
-{
+//region pieces methods
+
+int GameDeck::getNumMountain(){
 	return numMountain;
 }
 
-void GameDeck::setNumMountain(int mountainCount)
-{
+void GameDeck::setNumMountain(int mountainCount){
 	numMountain = mountainCount;
 }
 
@@ -51,60 +66,59 @@ int GameDeck::getNumFortress()
 	return numFortress;
 }
 
-void GameDeck::setNumFortress(int fortressCount)
-{
+void GameDeck::setNumFortress(int fortressCount){
 	numFortress = fortressCount;
 }
 
-int GameDeck::getNumLair()
-{
+int GameDeck::getNumLair(){
 	return numLair;
 }
 
-void GameDeck::setNumLair(int lairCount)
-{
+void GameDeck::setNumLair(int lairCount){
 	numLair = lairCount;
 }
 
-int GameDeck::getNumEncampment()
-{
+int GameDeck::getNumEncampment(){
 	return numEncampment;
 }
 
-void GameDeck::setNUmEncampment(int encampCount)
-{
+void GameDeck::setNUmEncampment(int encampCount){
 	numEncampment = encampCount;
 }
 
-int GameDeck::getNumHole()
-{
+int GameDeck::getNumHole(){
 	return numHole;
 }
 
-void GameDeck::setNumHole(int holeCount)
-{
+void GameDeck::setNumHole(int holeCount){
 	numHole = holeCount;
 }
 
-int GameDeck::getNumHero()
-{
+int GameDeck::getNumHero(){
 	return numHero;
 }
 
-void GameDeck::setNumHero(int heroCount)
-{
+void GameDeck::setNumHero(int heroCount){
 	numHero = heroCount;
 }
 
-int GameDeck::getNumDragon()
-{
+int GameDeck::getNumDragon(){
 	return numDragon;
 }
 
-void GameDeck::setNumDragon(int dragonCount)
-{
+void GameDeck::setNumDragon(int dragonCount){
 	numDragon = dragonCount;
 }
+
+int GameDeck::getNumLostTribe(){
+	return numLostTribe;
+}
+
+void GameDeck::setNumLostTribe(int tribeCount){
+	numLostTribe = tribeCount;
+}
+
+//race tokens methods
 
 int GameDeck::getAmazonToken() {
 	return amazonToken;
@@ -190,4 +204,38 @@ int GameDeck::getWizardToken() {
 }
 void GameDeck::setWizardToken(int decrement) {
 	wizardToken -= decrement;
+}
+
+//game deck information
+void GameDeck::showDeckInfo()
+{
+	cout << "Game deck information:" << endl;
+	//victory coins
+	cout << "\tVictory coins currently in deck: " << getGameCoin() << endl;
+	//region pieces
+	cout << "\tRegion pieces currently in deck:" << endl;
+	cout << "\t\tMountain pieces: " << getNumMountain() << endl;
+	cout <<	"\t\tFortess pieces: " << getNumFortress() << endl;
+	cout << "\t\tLair pieces: " << getNumLair() << endl;
+	cout << "\t\tEncampment pieces: " << getNumEncampment() << endl;
+	cout << "\t\tHole pieces: " << getNumHole() << endl;
+	cout << "\t\tHero pieces: " << getNumHero() << endl;
+	cout << "\t\tDragon pieces: " << getNumDragon() << endl;
+	cout << "\t\tLost tribe pieces: " << getNumLostTribe() << endl;
+	//race tokens
+	cout << "\tRace tokens currently in deck:" << endl;
+	cout << "\t\tAmazon tokens: " << getAmazonToken() << endl;
+	cout << "\t\tDwarf tokens: " << getDwarfToken() << endl;
+	cout << "\t\tElf tokens: " << getElfToken() << endl;
+	cout << "\t\tGhoul tokens: " << getGhoulToken() << endl;
+	cout << "\t\tRat tokens: " << getRatToken() << endl;
+	cout << "\t\tSkeleton tokens: " << getSkeletonToken() << endl;
+	cout << "\t\tSorcerer tokens: " << getSorcererToken() << endl;
+	cout << "\t\tTriton tokens: " << getTritonToken() << endl;
+	cout << "\t\tGiant tokens: " << getGiantToken() << endl;
+	cout << "\t\tHalfling tokens: " << getHalflingToken() << endl;
+	cout << "\t\tHuman tokens: " << getHumanToken() << endl;
+	cout << "\t\tOrc tokens: " << getOrcToken() << endl;
+	cout << "\t\tTroll tokens: " << getTrollToken() << endl;
+	cout << "\t\tWizard tokens: " << getWizardToken() << endl;
 }

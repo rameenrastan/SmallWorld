@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "Region.h"
 #include "Token.h"
 #include "Badge.h"
@@ -18,16 +19,11 @@ class Player
 private:
 	string playerName;
 	vector<Region*> ownedRegions;
-	vector<Token*> ownedTokens;
-	vector<VictoryCoin*> ownedCoins;
 	vector<Badge> badge;
 	vector<Banner> race;
 	int regionCount;
 	int tokenCount;
 	int coinCount;
-
-	//SummarySheet
-	//DiceRoller
 	
 public:
 	Player();
@@ -39,12 +35,13 @@ public:
 	void displayRollPercentages(Dice* dice);
 	int getRegionCount();
 	int getTokenCount();
-	int getcoinCount();
+	int getCoinCount();
 	bool checkRegionAdjacency(Region* region);
 	
 
 	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void conquers(Region* &region);
 	void scores(Banner banner, Badge bad, GameDeck*const &gamedeck);
+	void summarySheet(Banner banner, Badge bad);
 };
 

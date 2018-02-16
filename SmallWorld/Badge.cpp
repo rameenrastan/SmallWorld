@@ -6,9 +6,8 @@ Badge::Badge()
 {
 }
 
-Badge::Badge(string name, Power power)
+Badge::Badge(Power power)
 {
-	badgeName = name;
 	badgeType = power;
 }
 
@@ -17,10 +16,6 @@ Badge::~Badge()
 {
 }
 
-string Badge::getBadge()
-{
-	return badgeName;
-}
 
 int Badge::getBadgeType()
 {

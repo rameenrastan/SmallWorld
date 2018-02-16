@@ -15,6 +15,7 @@ private:
 	Player* owner;
 	string regionName;
 	int numTokens;
+	
 	bool owned;
 	bool lostTribe;
 	bool mountain;
@@ -27,6 +28,7 @@ private:
 	bool swamp;
 public:
 	vector<Region*> neighbors;
+
 	bool hasMountain();
 	bool hasLostTribe();
 	bool hasMine();
@@ -45,16 +47,19 @@ public:
 	bool isSwamp();
 	void setSwamp(bool);
 	bool isOwned();
+
 	void setRegionName(string name);
 	void setNumTokens(int num);
 	void addNeighbor(Region*  &r);
 	void eliminateMountain();
 	void eliminateLostTribe();
 	void setOwner(Player* const & player);
+
 	vector<Region*> getNeighbors() const;
 	Player* getOwner() const;
 	string getRegionName() const;
 	int getNumTokens() const;
+
 	Region();
 	Region(string name);
 	~Region();

@@ -6,9 +6,9 @@ Banner::Banner()
 {
 }
 
-Banner::Banner(string name,Race race)
+Banner::Banner(Race race)
 {
-	bannerName = name;
+
 	raceType = race;
 }
 
@@ -17,13 +17,9 @@ Banner::~Banner()
 {
 }
 
-string Banner::getBanner()
-{
-	return bannerName;
-}
-
 int Banner::getRaceType()
 {
+	
 	return raceType;
 }
 
