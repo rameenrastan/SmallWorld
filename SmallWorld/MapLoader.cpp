@@ -39,14 +39,14 @@ Map MapLoader::loadMap(string mapFileLocation)
 		}
 	}
 	Map map(regionPointers);
-	if (map.isConnected())
+	/*if (map.isConnected())
 	{
-		cout << "The map was loaded successfully and is a valid map!" << endl;
+		cout << "The map was loaded successfully and is a valid map!" << endl;*/
 		return map;
-	}
+	/*}
 	else {
 		cout << "This map was not loaded successfully, it is an invalid map!" << endl;
-	}
+	}*/
 }
 
 MapLoader::MapLoader()
