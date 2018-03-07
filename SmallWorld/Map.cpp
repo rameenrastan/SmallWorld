@@ -38,6 +38,7 @@ void Map::dfsTraversal(Region & currentNode)
 	}
 }
 
+
 /*
 Checks if the given Map is connected by performing a DFS using the dfsTraversal function (starts at the first node on the graph).
 */

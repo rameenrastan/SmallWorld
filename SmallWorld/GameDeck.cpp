@@ -206,6 +206,16 @@ void GameDeck::setWizardToken(int decrement) {
 	wizardToken -= decrement;
 }
 
+void GameDeck::decrementLostTribes()
+{
+	numLostTribe--;
+}
+
+void GameDeck::decrementMountains()
+{
+	numMountain--;
+}
+
 //game deck information
 void GameDeck::showDeckInfo()
 {

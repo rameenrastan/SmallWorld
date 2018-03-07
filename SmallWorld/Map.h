@@ -17,7 +17,6 @@ public:
 	void addBorder(Region* r1, Region* r2);
 	void addRegion(Region* r);
 	void dfsTraversal(Region & currentNode);
-	//bool isConnected(Region & startNode);
 	bool isConnected();
 	Map(vector<Region*> r);
 	Map();

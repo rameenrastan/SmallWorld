@@ -51,7 +51,7 @@
     <ClInclude Include="GameDeck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameStart.h">
+    <ClInclude Include="GameLoop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,7 +92,7 @@
     <ClCompile Include="GameDeck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameStart.cpp">
+    <ClCompile Include="GameLoop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

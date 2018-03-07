@@ -5,11 +5,17 @@ Region::Region()
 {
 }
 
+Region::Region(string name, string s)
+{
+	regionName = name;
+	numTokens = 0;
+	symbol = s;
+}
+
 Region::Region(string name)
 {
 	regionName = name;
 	numTokens = 0;
-
 }
 
 Region::~Region()
@@ -34,6 +40,16 @@ bool Region::hasLostTribe(){
 
 bool Region::hasMine(){
 	return mine;
+}
+
+void Region::placeMountain()
+{
+	mountain = true;
+}
+
+void Region::placeLostTribe()
+{
+	lostTribe = true;
 }
 
 void Region::setMine(bool mineReg){
@@ -94,6 +110,11 @@ void Region::setSwamp(bool swampReg){
 
 bool Region::isOwned(){
 	return owned;
+}
+
+string Region::getSymbol() const
+{
+	return symbol;
 }
 
 void Region::setRegionName(string name){

@@ -26,12 +26,15 @@ private:
 	bool fortress;
 	bool hill;
 	bool swamp;
+	string symbol;
 public:
 	vector<Region*> neighbors;
 
 	bool hasMountain();
 	bool hasLostTribe();
 	bool hasMine();
+	void placeMountain();
+	void placeLostTribe();
 	void setMine(bool);
 	bool isFarmland();
 	void setFarmland(bool);
@@ -47,7 +50,7 @@ public:
 	bool isSwamp();
 	void setSwamp(bool);
 	bool isOwned();
-
+	string getSymbol() const;
 	void setRegionName(string name);
 	void setNumTokens(int num);
 	void addNeighbor(Region*  &r);
@@ -62,6 +65,7 @@ public:
 
 	Region();
 	Region(string name);
+	Region(string name, string s);
 	~Region();
 };
 

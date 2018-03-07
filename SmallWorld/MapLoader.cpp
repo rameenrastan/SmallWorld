@@ -16,9 +16,12 @@ Map MapLoader::loadMap(string mapFileLocation)
 	mapFile >> numRegions;
 	for(int i = 0; i < numRegions; i++)
 	{
-		string name;
+		string name, symbol;
 		mapFile >> name;
-		regionPointers.push_back(new Region(name));
+		mapFile >> symbol;
+		cout << name << " " << symbol << endl;
+		regionPointers.push_back(new Region(name, symbol));
+	
 	}
 
 	for(auto & region : regionPointers)
@@ -39,14 +42,8 @@ Map MapLoader::loadMap(string mapFileLocation)
 		}
 	}
 	Map map(regionPointers);
-	/*if (map.isConnected())
-	{
-		cout << "The map was loaded successfully and is a valid map!" << endl;*/
-		return map;
-	/*}
-	else {
-		cout << "This map was not loaded successfully, it is an invalid map!" << endl;
-	}*/
+	regionPointers.clear();
+	return map;
 }
 
 MapLoader::MapLoader()

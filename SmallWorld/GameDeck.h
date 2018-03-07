@@ -71,10 +71,11 @@ public:
 	void setTrollToken(int);
 	int getWizardToken();
 	void setWizardToken(int);
+	void decrementLostTribes();
+	void decrementMountains();
 
 	//displays everything currently in the deck
 	void showDeckInfo();
-	
 	
 };
 
