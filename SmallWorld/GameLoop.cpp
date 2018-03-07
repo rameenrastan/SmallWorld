@@ -90,6 +90,25 @@ void GameLoop::placeMountainAndLostTribe()
 
 }
 
+void GameLoop::startUpPhase()
+{
+	cout << "Placing the Game Turn Marker to the starting position." << endl;
+	gameTurnMarker = 1;
+
+	placeMountainAndLostTribe();
+	distributeInitialVictoryCoins();
+}
+
+void GameLoop::distributeInitialVictoryCoins()
+{
+	cout << "Distributing initial victory coins to all players..." << endl;
+	for (auto & player : players)
+	{
+		cout << "Distributing 5 Victory Coins to player " << (*player).getPlayerName() << endl;
+		(*player).setVictoryCoinCount(5);
+	}
+}
+
 GameLoop::GameLoop()
 {
 }

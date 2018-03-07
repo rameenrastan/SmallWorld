@@ -17,6 +17,8 @@ private:
 public:
 	void initializeGame();
 	void placeMountainAndLostTribe();
+	void startUpPhase();
+	void distributeInitialVictoryCoins();
 	GameLoop();
 	~GameLoop();
 };

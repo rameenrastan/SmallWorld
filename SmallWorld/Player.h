@@ -23,7 +23,7 @@ private:
 	vector<Banner> race;
 	int regionCount;
 	int tokenCount;
-	int coinCount;
+	int victoryCoinCount;
 	
 public:
 	Player();
@@ -35,7 +35,8 @@ public:
 	void displayRollPercentages(Dice* dice);
 	int getRegionCount();
 	int getTokenCount();
-	int getCoinCount();
+	int getVictoryCoinCount();
+	void setVictoryCoinCount(int v);
 	bool checkRegionAdjacency(Region* region);
 	
 

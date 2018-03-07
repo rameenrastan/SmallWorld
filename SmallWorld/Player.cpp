@@ -12,7 +12,7 @@ Player::Player(string name)
 	playerName = name;
 	regionCount = 0;
 	tokenCount = 0;
-	coinCount = 5;
+	victoryCoinCount = 0;
 }
 
 Player::~Player()
@@ -48,8 +48,12 @@ int Player::getTokenCount(){
 	return tokenCount;
 }
 
-int Player::getCoinCount(){
-	return coinCount;
+int Player::getVictoryCoinCount(){
+	return victoryCoinCount;
+}
+
+void Player::setVictoryCoinCount(int v) {
+	victoryCoinCount = v;
 }
 
 /*
@@ -353,18 +357,18 @@ allocates victory coins to players based on number of regions owned and race abi
 void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 {
 	for (int i = 0; i < ownedRegions.size(); i++) {   
-		coinCount++;	//give 1 coin for every region owned
+		victoryCoinCount++;	//give 1 coin for every region owned
 		(*gamedeck).setGameCoin(1);		
 		switch (banner.getRaceType()) {  //allocating victory coins based on race type
 			case 1: //DWARVES
 				if ((*ownedRegions[i]).hasMine()) {   //give 1 extra coin for each mine region a dwarf owns
-					coinCount++;
+					victoryCoinCount++;
 					(*gamedeck).setGameCoin(1);
 				}
 				break;
 			case 10: //HUMANS
 				if ((*ownedRegions[i]).isFarmland()) { //give 1 extra coin for each farm region a human owns
-					coinCount++;
+					victoryCoinCount++;
 					(*gamedeck).setGameCoin(1);
 				}
 				break;
@@ -373,20 +377,20 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 				break;
 			case 13: //WIZARDS
 				if ((*ownedRegions[i]).isMagic()) { //give 1 extra coin for each magic region a wizard owns
-					coinCount++;
+					victoryCoinCount++;
 					(*gamedeck).setGameCoin(1);
 				}
 		}
 	}
 	switch (bad.getBadgeType()) {  //allocating victory coins based on badge type
 		case 0: //ALCHEMIST
-			coinCount += 2;   //gives 2 extra coins per turn 
+			victoryCoinCount += 2;   //gives 2 extra coins per turn 
 			(*gamedeck).setGameCoin(2);
 			break;
 		case 7: //FOREST
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isForest()) { //give 1 extra coin for each forest region owned
-					coinCount++;
+					victoryCoinCount++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
@@ -394,7 +398,7 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 		case 8: //FORTIFIED
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isFortress()) { //give 1 extra coin for each fortress on a region owned
-					coinCount++;
+					victoryCoinCount++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
@@ -402,14 +406,14 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 		case 10: //HILL
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isHill()) { //give 1 extra coin for each hill region owned
-					coinCount++;
+					victoryCoinCount++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
 			break;
 		case 11: //MERCHANT
 			for (int i = 0; i < ownedRegions.size(); i++) {  //give 1 extra coin for each region owned
-				coinCount++;
+				victoryCoinCount++;
 			}
 			break;
 		case 13: //PILLAGING
@@ -418,7 +422,7 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 		case 17: //SWAMP
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isSwamp()) { //give 1 extra coin for every swamp region owned
-					coinCount++;
+					victoryCoinCount++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
@@ -542,6 +546,6 @@ void Player::summarySheet(Banner banner, Badge bad)
 		break;
 	}
 	cout << "Number of tokens available: "<< getTokenCount() << endl;
-	cout << "Number of victoy coins: " << getCoinCount() << endl;
+	cout << "Number of victoy coins: " << getVictoryCoinCount() << endl;
 }
 
