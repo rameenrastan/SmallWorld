@@ -19,6 +19,8 @@ public:
 	void placeMountainAndLostTribe();
 	void startUpPhase();
 	void distributeInitialVictoryCoins();
+	void determineTurnOrder();
+	void mainLoop();
 	GameLoop();
 	~GameLoop();
 };

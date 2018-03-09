@@ -109,6 +109,62 @@ void GameLoop::distributeInitialVictoryCoins()
 	}
 }
 
+void GameLoop::determineTurnOrder()
+{
+	string playerName;
+	cout << "Which player has the most pointed ears?" << endl;
+	cin >> playerName;
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		if ((*players[i]).getPlayerName() == playerName)
+		{
+			rotate(players.begin(), players.begin() + i, players.end());
+		}
+	}
+
+	cout << playerName << " has the most pointed ears, and therefore starts each turn!" << endl;
+	cout << "This is the determined turn order:" << endl;
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		cout << i+1 << " " << (*players[i]).getPlayerName() << endl;
+	}
+
+}
+
+void GameLoop::mainLoop()
+{
+	//FIRST TURN
+	if (gameTurnMarker == 1)
+	{
+		cout << "First Turn: Each Player will pick a Race/Special Power Combo, Conquer Some Regions, and score some Victory Coins." << endl;
+		for (auto & player : players)
+		{
+			cout << (*player).getPlayerName() << "'s turn." << endl;
+			//hard coded empty behavior for picking race/power combo, conquering regions, and gaining victory coins.
+			cout << (*player).getPlayerName() << " picks a race/power combo." << endl;
+			cout << (*player).getPlayerName() << " conquers some regions." << endl;
+			cout << (*player).getPlayerName() << " scores some Victory coins." << endl;
+		}
+		cout << "Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
+	}
+
+	//FOLLOWING TURNS
+	while (gameTurnMarker <= 8)
+	{
+		for (auto & player : players)
+		{
+			cout << (*player).getPlayerName() << "'s turn." << endl;
+			//hard coded empty behavior for picking race/power combo, conquering regions, and gaining victory coins.
+			cout << (*player).getPlayerName() << " picks a race/power combo." << endl;
+			cout << (*player).getPlayerName() << " conquers some regions." << endl;
+			cout << (*player).getPlayerName() << " scores some Victory coins." << endl;
+		}
+
+	}
+}
+
 GameLoop::GameLoop()
 {
 }
