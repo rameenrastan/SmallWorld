@@ -18,6 +18,7 @@ public:
 	void addRegion(Region* r);
 	void dfsTraversal(Region & currentNode);
 	bool isConnected();
+	void displayRegionList();
 	Map(vector<Region*> r);
 	Map();
 	~Map();

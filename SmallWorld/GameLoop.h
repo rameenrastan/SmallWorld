@@ -13,14 +13,15 @@ private:
 	int gameTurnMarker;
 	Map gameMap;
 	GameDeck gameDeck;
-	vector<Player*> players;
 public:
+	vector<Player*> players;
 	void initializeGame();
 	void placeMountainAndLostTribe();
 	void startUpPhase();
 	void distributeInitialVictoryCoins();
 	void determineTurnOrder();
 	void mainLoop();
+	void followingTurn(Player* player);
 	GameLoop();
 	~GameLoop();
 };

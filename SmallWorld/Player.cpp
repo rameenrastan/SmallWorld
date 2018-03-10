@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
-
+using std::cout;
 
 
 Player::Player()
@@ -279,8 +279,18 @@ Called when a player attempts to conquer a region.
 Checks the type of region (if it has a lost tribe, is already conquered, etc.) and determines if the user has sufficient number of tokens to conquer it.
 Also checks if the region is adjacent to one of the user's currently owned regions.
 */
-void Player::conquers(Region* &region)
+void Player::conquers(Region* &region, bool finalConquest)
 {
+	//first conquest (player does not yet own any regions)
+	if (ownedRegions.size() == 0)
+	{
+		if ((*region).getNeighbors().size() > 4)
+		{
+			cout << "You must conquer a Border region on your First Conquest!" << endl;
+			return;
+		}
+	}
+
 	if (checkRegionAdjacency(region) || ownedRegions.size() == 0) {
 		if ((*region).hasMountain())
 		{
@@ -293,6 +303,39 @@ void Player::conquers(Region* &region)
 				(*region).setOwner(this);
 				regionCount++;
 				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+			}
+			else if (finalConquest && tokenCount > 0)
+			{
+				string choice;
+				cout << "You do not have enough tokens to conquer this region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cin >> choice;
+				while (choice != "Y" || choice != "N")
+				{
+					cout << "Invalid choice, please re-enter (Y/N):" << endl;
+					cin >> choice;
+				}
+				if (choice == "N")
+				{
+					cout << "You chose not to use a reinforcement roll. You are done your conquest for this turn." << endl;
+					return;
+				}
+				else if (choice == "Y")
+				{
+					int roll = reinforcementRoll(&dice);
+					if (roll + tokenCount > 2)
+					{
+						cout << "You have rolled a " << roll << " and have successfully conquered the region!" << endl;
+						ownedRegions.push_back(region);
+						(*region).eliminateMountain();
+						(*region).setOwned(true);
+						(*region).setNumTokens(tokenCount);
+						(*region).setOwner(this);
+						tokenCount = 0;
+						regionCount++;
+						cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+					}
+				}
+
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;
@@ -309,6 +352,39 @@ void Player::conquers(Region* &region)
 				(*region).setOwner(this);
 				regionCount++;
 				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+			}
+			else if (finalConquest && tokenCount > 0)
+			{
+				string choice;
+				cout << "You do not have enough tokens to conquer this region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cin >> choice;
+				while (choice != "Y" || choice != "N")
+				{
+					cout << "Invalid choice, please re-enter (Y/N):" << endl;
+					cin >> choice;
+				}
+				if (choice == "N")
+				{
+					cout << "You chose not to use a reinforcement roll. You are done your conquest for this turn." << endl;
+					return;
+				}
+				else if (choice == "Y")
+				{
+					int roll = reinforcementRoll(&dice);
+					if (roll + tokenCount > 2)
+					{
+						cout << "You have rolled a " << roll << " and have successfully conquered the region!" << endl;
+						ownedRegions.push_back(region);
+						(*region).eliminateLostTribe();
+						(*region).setOwned(true);
+						(*region).setNumTokens(tokenCount);
+						(*region).setOwner(this);
+						tokenCount = 0;
+						regionCount++;
+						cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+					}
+				}
+
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;
@@ -328,6 +404,36 @@ void Player::conquers(Region* &region)
 				cout << "You do not have enough tokens to conquer this region!" << endl;
 			}
 		}
+		else if (finalConquest && (*((*region).getOwner())).getTokenCount() -1)
+		{
+			string choice;
+			cout << "You do not have enough tokens to conquer this region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+			cin >> choice;
+			while (choice != "Y" || choice != "N")
+			{
+				cout << "Invalid choice, please re-enter (Y/N):" << endl;
+				cin >> choice;
+			}
+			if (choice == "N")
+			{
+				cout << "You chose not to use a reinforcement roll. You are done your conquest for this turn." << endl;
+				return;
+			}
+			else if (choice == "Y")
+			{
+				int roll = reinforcementRoll(&dice);
+				if (roll + tokenCount > (*((*region).getOwner())).getTokenCount() + 2)
+				{
+					cout << "You have rolled a " << roll << " and have successfully conquered the region!" << endl;
+					(*region).setNumTokens((*region).getNumTokens() + tokenCount);
+					tokenCount = 0;
+					ownedRegions.push_back(region);
+					(*region).setOwner(this);
+					cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+				}
+			}
+
+		}
 		else if (!(*region).isOwned())
 		{
 			if (tokenCount > 1)
@@ -339,6 +445,37 @@ void Player::conquers(Region* &region)
 				(*region).setOwner(this);
 				regionCount++;
 				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+			}
+			else if (finalConquest && tokenCount > 0)
+			{
+				string choice;
+				cout << "You do not have enough tokens to conquer this region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cin >> choice;
+				while (choice != "Y" || choice != "N")
+				{
+					cout << "Invalid choice, please re-enter (Y/N):" << endl;
+					cin >> choice;
+				}
+				if (choice == "N")
+				{
+					cout << "You chose not to use a reinforcement roll. You are done your conquest for this turn." << endl;
+					return;
+				}
+				else if (choice == "Y")
+				{
+					int roll = reinforcementRoll(&dice);
+					if (roll + tokenCount > 1)
+					{
+						ownedRegions.push_back(region);
+						(*region).setOwned(true);
+						(*region).setNumTokens(tokenCount);
+						(*region).setOwner(this);
+						tokenCount = 0;
+						regionCount++;
+						cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+					}
+				}
+
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;

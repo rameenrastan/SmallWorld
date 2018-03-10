@@ -147,7 +147,7 @@ void GameLoop::mainLoop()
 			cout << (*player).getPlayerName() << " conquers some regions." << endl;
 			cout << (*player).getPlayerName() << " scores some Victory coins." << endl;
 		}
-		cout << "Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
+		cout << "First Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
 
 	//FOLLOWING TURNS
@@ -155,14 +155,46 @@ void GameLoop::mainLoop()
 	{
 		for (auto & player : players)
 		{
-			cout << (*player).getPlayerName() << "'s turn." << endl;
-			//hard coded empty behavior for picking race/power combo, conquering regions, and gaining victory coins.
-			cout << (*player).getPlayerName() << " picks a race/power combo." << endl;
-			cout << (*player).getPlayerName() << " conquers some regions." << endl;
-			cout << (*player).getPlayerName() << " scores some Victory coins." << endl;
+			//followingTurn(*player)
 		}
-
+		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
+}
+
+void GameLoop::followingTurn(Player* player)
+{
+	cout << "Select an option:" << endl;
+	cout << "1. Expand the reach of your race through new conquests." << endl;
+	cout << "2. Put your race In Decline to select a new one." << endl;
+
+	int choice;
+	cin >> choice;
+
+	string regionName;
+
+	switch(choice)
+	{
+		case 1:
+			cout << "You currently have " << (*player).getTokenCount() << endl;
+			cout << (*player).getPlayerName() << endl;
+			cout << "Please write the name of the region you wish to conquer from the list:" << endl;
+			gameMap.displayRegionList();
+			cin >> regionName;
+
+			for (auto & region : gameMap.regions)
+			{
+				if ((*region).getRegionName() == regionName)
+				{
+					(*player).conquers(region, false);
+				}
+			}
+
+			break;
+
+		case 2:
+			break;
+	}
+
 }
 
 GameLoop::GameLoop()
