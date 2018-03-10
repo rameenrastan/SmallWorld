@@ -686,3 +686,89 @@ void Player::summarySheet(Banner banner, Badge bad)
 	cout << "Number of victoy coins: " << getVictoryCoinCount() << endl;
 }
 
+void Player::redeployTroops(Region * r1, Region * r2, int tokens)
+{
+	cout << "Deploying troops from " << r1->getRegionName() << " to " << r2->getRegionName() << endl;
+	if (r1->getNumTokens() <= tokens)
+	{
+		cout << "Invalid move: you must leave at least 1 token at a region!" << endl;
+		return;
+	}
+	else
+	{
+		r1->setNumTokens(r1->getNumTokens() - tokens);
+		cout << r1->getRegionName() << " now has " << r1->getNumTokens() << " tokens. (removed " << tokens << " tokens)" << endl;
+		r2->setNumTokens(r2->getNumTokens() + tokens);
+		cout << r2->getRegionName() << " now has " << r2->getNumTokens() << " tokens. (added " << tokens << " tokens)" << endl;
+	}
+
+}
+
+void Player::readyTroops()
+{
+	cout << "Ready your troops: taking all but 1 Race Token from each of your Regions back in hand." << endl;
+	for (auto & region : ownedRegions)
+	{
+		cout << "Removing " << region->getNumTokens() - 1 << " tokens from region " << region->getRegionName() << endl;
+		tokenCount += region->getNumTokens() - 1;
+		region->setNumTokens(1);
+	}
+	cout << "You now have " << tokenCount << " race tokens in hand." << endl;
+}
+
+void Player::abandonRegion(Region * r)
+{
+	cout << "Abandoning Region " << r->getRegionName() << endl;
+	cout << "Gaining " << r->getNumTokens() << " tokens back in hand." << endl;
+	tokenCount += r->getNumTokens();
+	r->setNumTokens(0);
+	for (int i = 0; i < ownedRegions.size(); i++)
+	{
+		if (ownedRegions[i]->getRegionName() == r->getRegionName())
+		{
+			cout << "Removing region " << ownedRegions[i]->getRegionName() << " from your owned regions." << endl;
+			ownedRegions.erase(ownedRegions.begin() + i);
+		}
+	}
+	r->setOwned(false);
+}
+
+void Player::redeployTroops()
+{
+	cout << "Your owned regions: " << endl;
+	for (auto & region : ownedRegions)
+	{
+		cout << (*region).getRegionName() << " Number of tokens: " << (*region).getNumTokens() << endl;
+	}
+	string regionName;
+	cout << "Which region would you like to remove tokens from?" << endl;
+	cin >> regionName;
+	for (auto & region : ownedRegions)
+	{
+		if ((*region).getRegionName() == regionName)
+		{
+			cout << "How many tokens would you like to remove from this region? Must be less than " << (*region).getNumTokens() << endl;
+			int num;
+			cin >> num;
+			while (num >= (*region).getNumTokens())
+			{
+				cout << "Too many tokens.. must be less than " << (*region).getNumTokens() << endl;
+				int num;
+				cin >> num;
+			}
+
+			cout << "To  which region would you like to move these tokens to?" << endl;
+			string regionName;
+			cin >> regionName;
+			for (auto & region : ownedRegions)
+			{
+				if ((*region).getRegionName() == regionName)
+				{
+					(*region).setNumTokens(num + (*region).getNumTokens());
+					cout << "Moved " << num << " tokens to region " << (*region).getRegionName() << endl;
+				}
+			}
+		}
+	}
+}
+

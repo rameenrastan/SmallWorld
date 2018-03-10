@@ -11,6 +11,7 @@ class GameLoop
 {
 private:
 	int gameTurnMarker;
+	int numTurns;
 	Map gameMap;
 	GameDeck gameDeck;
 public:

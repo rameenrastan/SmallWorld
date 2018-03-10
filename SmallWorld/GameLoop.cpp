@@ -27,12 +27,14 @@ void GameLoop::initializeGame()
 		cout << "2 Player Mode Selected." << endl;
  		players.push_back(new Player("Player1"));
 		players.push_back(new Player("Player2"));
+		numTurns = 10;
 		break;
 	case 3:
 		cout << "3 Player Mode Selected." << endl;
 		players.push_back(new Player("Player1"));
 		players.push_back(new Player("Player2"));
 		players.push_back(new Player("Player3"));
+		numTurns = 10;
 		break;
 	case 4:
 		cout << "4 Player Mode Selected." << endl;
@@ -40,6 +42,7 @@ void GameLoop::initializeGame()
 		players.push_back(new Player("Player2"));
 		players.push_back(new Player("Player3"));
 		players.push_back(new Player("Player4"));
+		numTurns = 9;
 		break;
 	case 5:
 		cout << "5 Player Mode Selected." << endl;
@@ -48,12 +51,13 @@ void GameLoop::initializeGame()
 		players.push_back(new Player("Player3"));
 		players.push_back(new Player("Player4"));
 		players.push_back(new Player("Player5"));
+		numTurns = 8;
 		break;
 	}
 
 	cout << "Initializing all game pieces..." << endl;
 	gameDeck = GameDeck();
-	gameDeck.showDeckInfo();
+	//gameDeck.showDeckInfo();
 	
 }
 
@@ -151,14 +155,16 @@ void GameLoop::mainLoop()
 	}
 
 	//FOLLOWING TURNS
-	while (gameTurnMarker <= 8)
+	while (gameTurnMarker <= numTurns)
 	{
 		for (auto & player : players)
 		{
-			//followingTurn(*player)
+			cout << (*player).getPlayerName() << " performs following turn. (Conquers new regions or puts race In Decline." << endl;
 		}
 		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
+
+	cout << "Game Finished! The player with the highest number of Victory Coins in the winnter!" << endl;
 }
 
 void GameLoop::followingTurn(Player* player)
@@ -179,19 +185,12 @@ void GameLoop::followingTurn(Player* player)
 			cout << (*player).getPlayerName() << endl;
 			cout << "Please write the name of the region you wish to conquer from the list:" << endl;
 			gameMap.displayRegionList();
-			cin >> regionName;
-
-			for (auto & region : gameMap.regions)
-			{
-				if ((*region).getRegionName() == regionName)
-				{
-					(*player).conquers(region, false);
-				}
-			}
+			//conquer options
 
 			break;
 
 		case 2:
+			//put in decline
 			break;
 	}
 

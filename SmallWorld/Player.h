@@ -18,7 +18,6 @@ class Player
 {
 private:
 	string playerName;
-	vector<Region*> ownedRegions;
 	vector<Badge> badge;
 	vector<Banner> race;
 	Dice dice;
@@ -30,7 +29,7 @@ public:
 	Player();
 	Player(string);
 	~Player();
-
+	vector<Region*> ownedRegions;
 	string getPlayerName();
 	int reinforcementRoll(Dice* dice);
 	void displayRollPercentages(Dice* dice);
@@ -43,5 +42,9 @@ public:
 	void conquers(Region* &region, bool finalConquest);
 	void scores(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void summarySheet(Banner banner, Badge bad);
+	void redeployTroops(Region* r1, Region* r2, int tokens);
+	void readyTroops();
+	void abandonRegion(Region* r);
+	void redeployTroops();
 };
 
