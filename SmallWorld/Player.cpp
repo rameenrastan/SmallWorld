@@ -278,6 +278,7 @@ void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 Called when a player attempts to conquer a region.
 Checks the type of region (if it has a lost tribe, is already conquered, etc.) and determines if the user has sufficient number of tokens to conquer it.
 Also checks if the region is adjacent to one of the user's currently owned regions.
+If a user does not have enough tokens to conquer, gives user option to use reinforcement roll.
 */
 void Player::conquers(Region* &region, bool finalConquest)
 {

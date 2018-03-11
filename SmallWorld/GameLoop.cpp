@@ -2,6 +2,7 @@
 #include "GameLoop.h"
 
 
+//initializes a game based on user input settings (map name, number of players, etc.)
 void GameLoop::initializeGame()
 {
 	int numPlayers;
@@ -65,6 +66,7 @@ void GameLoop::initializeGame()
 	
 }
 
+//Places Mountain and Lost Tribe tokens on all regions on the game map containing these symbols
 void GameLoop::placeMountainAndLostTribe()
 {
 	for (auto & region : gameMap.regions)
@@ -98,6 +100,7 @@ void GameLoop::placeMountainAndLostTribe()
 
 }
 
+//Start Up Phase (places turn marker to start, places mountain/lost tribe tokens, distributes victory coins, determines turn order, generates 6 race/power combos)
 void GameLoop::startUpPhase()
 {
 	cout << "Placing the Game Turn Marker to the starting position." << endl;
@@ -109,6 +112,7 @@ void GameLoop::startUpPhase()
 	generateRaceCombo();
 }
 
+//distributes 5 victory coins to all players on start up
 void GameLoop::distributeInitialVictoryCoins()
 {
 	cout << "Distributing initial victory coins to all players..." << endl;
@@ -119,6 +123,7 @@ void GameLoop::distributeInitialVictoryCoins()
 	}
 }
 
+//determines the turn order of the game (based on whoever has the most pointed ears)
 void GameLoop::determineTurnOrder()
 {
 	string playerName;
@@ -143,6 +148,7 @@ void GameLoop::determineTurnOrder()
 
 }
 
+//generates 6 Race/Power combos
 void GameLoop::generateRaceCombo()
 {
 	vector<Banner> banners;
@@ -201,6 +207,8 @@ void GameLoop::generateRaceCombo()
 
 
 }
+
+//allows a user to select a Race/Power combo (which then calls picks_race in player class)
 void GameLoop::playerPicksRace(Player* player)
 {
 	cout << "\nPlease type the number of the race power combo you would like to select:" << endl;
@@ -244,6 +252,7 @@ void GameLoop::playerPicksRace(Player* player)
 	}
 }
 
+//allows a player to go In Decline and select a new Power/Race combo
 void GameLoop::playerInDecline(Player * player)
 {
 	cout << "\nIn Decline: Please type the number of the new race power combo you would like to select:" << endl;
@@ -290,6 +299,7 @@ void GameLoop::playerInDecline(Player * player)
 	}
 }
 
+//main game loop (logic of looping for first turn and following turns)
 void GameLoop::mainLoop()
 {
 	//FIRST TURN
@@ -320,6 +330,7 @@ void GameLoop::mainLoop()
 	cout << "Game Finished! The player with the highest number of Victory Coins in the winnter!" << endl;
 }
 
+//gives user options in following turns
 void GameLoop::followingTurn(Player* player)
 {
 	cout << "Select an option:" << endl;
@@ -329,7 +340,7 @@ void GameLoop::followingTurn(Player* player)
 	int choice;
 	cin >> choice;
 
-	string regionName;
+	string regionName; 
 
 	switch(choice)
 	{

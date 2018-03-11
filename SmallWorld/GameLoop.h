@@ -10,6 +10,9 @@
 
 using namespace std;
 
+/*
+This class is the body of the program: it contains the logic of the Game Loop (from initializing/starting a game to handling all turn-based logic)
+*/
 class GameLoop
 {
 private:
