@@ -133,6 +133,110 @@ void GameLoop::determineTurnOrder()
 
 }
 
+void GameLoop::generateRaceCombo()
+{
+	vector<Banner> banners;
+		
+	banners.push_back(Banner(Banner::AMAZONS));
+	banners.push_back(Banner(Banner::DWARVES));
+	banners.push_back(Banner(Banner::ELVES));
+	banners.push_back(Banner(Banner::GHOULS));
+	banners.push_back(Banner(Banner::RATMEN));
+	banners.push_back(Banner(Banner::SKELETONS));
+	banners.push_back(Banner(Banner::SORCERERS));
+	banners.push_back(Banner(Banner::TRITONS));
+	banners.push_back(Banner(Banner::GIANTS));
+	banners.push_back(Banner(Banner::HALFLINGS));
+	banners.push_back(Banner(Banner::HUMANS));
+	banners.push_back(Banner(Banner::ORCS));
+	banners.push_back(Banner(Banner::TROLLS));
+	banners.push_back(Banner(Banner::WIZARDS));
+
+	vector<Badge> badges;
+
+	badges.push_back(Badge(Badge::ALCHEMIST));
+	badges.push_back(Badge(Badge::BERSERK));
+	badges.push_back(Badge(Badge::BIVOUACKING));
+	badges.push_back(Badge(Badge::COMMANDO));
+	badges.push_back(Badge(Badge::DIPLOMAT));
+	badges.push_back(Badge(Badge::DRAGONMASTER));
+	badges.push_back(Badge(Badge::FLYING));
+	badges.push_back(Badge(Badge::FOREST));
+	badges.push_back(Badge(Badge::FORTIFIED));
+	badges.push_back(Badge(Badge::HEROIC));
+	badges.push_back(Badge(Badge::HILL));
+	badges.push_back(Badge(Badge::MERCHANT));
+	badges.push_back(Badge(Badge::MOUNTED));
+	badges.push_back(Badge(Badge::PILLAGING));
+	badges.push_back(Badge(Badge::SEAFARING));
+	badges.push_back(Badge(Badge::SPIRIT));
+	badges.push_back(Badge(Badge::STOUT));
+	badges.push_back(Badge(Badge::SWAMP));
+	badges.push_back(Badge(Badge::UNDERWORLD));
+	badges.push_back(Badge(Badge::WEALTHY));
+
+	srand(time(0));
+	random_shuffle(begin(banners), end(banners));
+	random_shuffle(begin(badges), end(badges));
+
+	pair <Banner, Badge> combo;
+	cout << "Race/Power Combos:" << endl;
+	for (int i = 0; i < 14; i++) {
+		combo = make_pair(banners[i], badges[i]);
+		pairs.push_back(combo);
+	}
+	for (int i = 0; i < 6; i++){
+		cout << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
+		}
+
+
+}
+void GameLoop::playerPicksRace(Player* player)
+{
+	
+	cout << "Please type the number of the race power combo you would like to select:" << endl;
+	int option;
+	for (int i = 0; i < 6; i++) {
+		cout << i <<". "<< pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
+	}
+	cin >> option;
+	switch (option) {
+		case 0:
+			player->picks_race(pairs[0].first, pairs[0].second, &gameDeck);
+			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			pairs.erase(pairs.begin() + 0);
+			break;
+		case 1:
+			player->picks_race(pairs[1].first, pairs[1].second, &gameDeck);
+			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			pairs.erase(pairs.begin() + 1);
+			break;
+		case 2:
+			player->picks_race(pairs[2].first, pairs[2].second, &gameDeck);
+			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			pairs.erase(pairs.begin() + 2);
+			break;
+		case 3:
+			player->picks_race(pairs[3].first, pairs[3].second, &gameDeck);
+			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			pairs.erase(pairs.begin() + 3);
+			break;
+		case 4:
+			player->picks_race(pairs[4].first, pairs[4].second, &gameDeck);
+			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			pairs.erase(pairs.begin() + 4);
+			break;
+		case 5:
+			player->picks_race(pairs[5].first, pairs[5].second, &gameDeck);
+			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			pairs.erase(pairs.begin() + 5);
+			break;
+	}
+	cout << "Updated list of race power combos: " << endl;
+	for (int i = 0; i < 6; i++) {
+		cout << i << ". " << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
+	}
+}
 void GameLoop::mainLoop()
 {
 	//FIRST TURN

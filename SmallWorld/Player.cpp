@@ -82,16 +82,16 @@ amount of tokens to them and updating gamedeck tokens
 
 void Player::picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck)
 {
- 
-	race.push_back(banner);
-	badge.push_back(bad);
+
+	race = banner;
+	badge = bad;
 	int storage = 0; // used to store token value of tokens that a badge gives out
-	
+
 	switch (banner.getRaceType()) {  //allocating tokens based on race
-		case 0: //AMAZONS
-			tokenCount+=6;
-			(*gamedeck).setAmazonToken(6);
-			break;
+	case 0: //AMAZONS
+		tokenCount += 6;
+		(*gamedeck).setAmazonToken(6);
+		break;
 		case 1: //DWARVES
 			tokenCount += 3;
 			(*gamedeck).setDwarfToken(3);
@@ -354,7 +354,7 @@ void Player::conquers(Region* &region)
 /*
 allocates victory coins to players based on number of regions owned and race abilities
 */
-void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
+void Player::scores(GameDeck*const &gamedeck)
 {
 	for (int i = 0; i < ownedRegions.size(); i++) {   
 		victoryCoinCount++;	//give 1 coin for every region owned
@@ -436,6 +436,10 @@ void Player::scores(Banner banner, Badge bad, GameDeck*const &gamedeck)
 /*
 Displays the information of the player. Name,race,badge,tokens,victory coins.
 */
+
+/*
+Displays the information of the player. Name,race,badge,tokens,victory coins.
+*/
 void Player::summarySheet(Banner banner, Badge bad)
 {
 	cout << "Name: " << getPlayerName() << endl;
@@ -444,13 +448,13 @@ void Player::summarySheet(Banner banner, Badge bad)
 		cout << "Current race: AMAZONS" << endl;
 		break;
 	case 1: //DWARVES
-		cout << "Current race: DWARVES"<<endl;
+		cout << "Current race: DWARVES" << endl;
 		break;
 	case 2: //ELVES
-		cout << "Current race: ELVES"<<endl;
+		cout << "Current race: ELVES" << endl;
 		break;
 	case 3: //GHOULS
-		cout << "Current race: GHOULS"<<endl;
+		cout << "Current race: GHOULS" << endl;
 		break;
 	case 4: //RATMEN	
 		cout << "Current race: RATMEN" << endl;
@@ -545,7 +549,7 @@ void Player::summarySheet(Banner banner, Badge bad)
 		cout << "Current badge: WEALTHY" << endl;
 		break;
 	}
-	cout << "Number of tokens available: "<< getTokenCount() << endl;
+	cout << "Number of tokens available: " << getTokenCount() << endl;
 	cout << "Number of victoy coins: " << getVictoryCoinCount() << endl;
 }
 
