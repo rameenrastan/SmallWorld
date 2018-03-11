@@ -106,6 +106,7 @@ void GameLoop::startUpPhase()
 	placeMountainAndLostTribe();
 	distributeInitialVictoryCoins();
 	determineTurnOrder();
+	generateRaceCombo();
 }
 
 void GameLoop::distributeInitialVictoryCoins()
@@ -202,7 +203,6 @@ void GameLoop::generateRaceCombo()
 }
 void GameLoop::playerPicksRace(Player* player)
 {
-	
 	cout << "Please type the number of the race power combo you would like to select:" << endl;
 	int option;
 	for (int i = 0; i < 6; i++) {
@@ -246,6 +246,53 @@ void GameLoop::playerPicksRace(Player* player)
 		cout << i << ". " << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
 	}
 }
+
+void GameLoop::playerInDecline(Player * player)
+{
+	cout << "\nIn Decline: Please type the number of the new race power combo you would like to select:" << endl;
+	int option;
+	for (int i = 0; i < 6; i++) {
+		cout << i << ". " << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
+	}
+	cin >> option;
+	switch (option) {
+	case 0:
+		player->decline(pairs[0].first, pairs[0].second, &gameDeck);
+		cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+		pairs.erase(pairs.begin() + 0);
+		break;
+	case 1:
+		player->decline(pairs[1].first, pairs[1].second, &gameDeck);
+		cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+		pairs.erase(pairs.begin() + 1);
+		break;
+	case 2:
+		player->decline(pairs[2].first, pairs[2].second, &gameDeck);
+		cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+		pairs.erase(pairs.begin() + 2);
+		break;
+	case 3:
+		player->decline(pairs[3].first, pairs[3].second, &gameDeck);
+		cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+		pairs.erase(pairs.begin() + 3);
+		break;
+	case 4:
+		player->decline(pairs[4].first, pairs[4].second, &gameDeck);
+		cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+		pairs.erase(pairs.begin() + 4);
+		break;
+	case 5:
+		player->decline(pairs[5].first, pairs[5].second, &gameDeck);
+		cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+		pairs.erase(pairs.begin() + 5);
+		break;
+	}
+	cout << "Updated list of race power combos: " << endl;
+	for (int i = 0; i < 6; i++) {
+		cout << i << ". " << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
+	}
+}
+
 void GameLoop::mainLoop()
 {
 	//FIRST TURN

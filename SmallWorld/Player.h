@@ -19,7 +19,6 @@ class Player
 {
 private:
 	string playerName;
-	vector<Region*> ownedRegions;
 	Badge badge;
 	Banner race;
 	Dice dice;
@@ -42,11 +41,12 @@ public:
 	bool checkRegionAdjacency(Region* region);
 	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void conquers(Region* &region, bool finalConquest);
-	void scores(Banner banner, Badge bad, GameDeck*const &gamedeck);
-	void summarySheet(Banner banner, Badge bad);
+	void scores(GameDeck*const &gamedeck);
+	void summarySheet();
 	void redeployTroops(Region* r1, Region* r2, int tokens);
 	void readyTroops();
 	void abandonRegion(Region* r);
 	void redeployTroops();
+	void decline(Banner, Badge, GameDeck* const & gameDeck);
 };
 

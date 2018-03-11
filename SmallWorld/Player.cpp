@@ -494,7 +494,7 @@ void Player::scores(GameDeck*const &gamedeck)
 	for (int i = 0; i < ownedRegions.size(); i++) {   
 		victoryCoinCount++;	//give 1 coin for every region owned
 		(*gamedeck).setGameCoin(1);		
-		switch (banner.getRaceType()) {  //allocating victory coins based on race type
+		switch (race.getRaceType()) {  //allocating victory coins based on race type
 			case 1: //DWARVES
 				if ((*ownedRegions[i]).hasMine()) {   //give 1 extra coin for each mine region a dwarf owns
 					victoryCoinCount++;
@@ -517,7 +517,7 @@ void Player::scores(GameDeck*const &gamedeck)
 				}
 		}
 	}
-	switch (bad.getBadgeType()) {  //allocating victory coins based on badge type
+	switch (badge.getBadgeType()) {  //allocating victory coins based on badge type
 		case 0: //ALCHEMIST
 			victoryCoinCount += 2;   //gives 2 extra coins per turn 
 			(*gamedeck).setGameCoin(2);
@@ -575,10 +575,10 @@ Displays the information of the player. Name,race,badge,tokens,victory coins.
 /*
 Displays the information of the player. Name,race,badge,tokens,victory coins.
 */
-void Player::summarySheet(Banner banner, Badge bad)
+void Player::summarySheet()
 {
 	cout << "Name: " << getPlayerName() << endl;
-	switch (banner.getRaceType()) {
+	switch (race.getRaceType()) {
 	case 0: //AMAZONS
 		cout << "Current race: AMAZONS" << endl;
 		break;
@@ -622,7 +622,7 @@ void Player::summarySheet(Banner banner, Badge bad)
 		cout << "Current race: WIZARDS" << endl;
 		break;
 	}
-	switch (bad.getBadgeType()) {
+	switch (badge.getBadgeType()) {
 	case 0: //ALCHEMIST
 		cout << "Current badge: ALCHEMIST" << endl;
 		break;
@@ -772,5 +772,16 @@ void Player::redeployTroops()
 			}
 		}
 	}
+}
+
+void Player::decline(Banner banner, Badge badge, GameDeck* const & gameDeck)
+{
+	for (auto & region : ownedRegions)
+	{
+		cout << "Removing " << region->getNumTokens() - 1 << " race tokens from owned region " << region->getRegionName() << endl;
+		region->setNumTokens(1);
+	}
+	cout << "Switching Race/Power combo to " << badge.getBadgeName() << " " << banner.getRaceName() << endl;
+	picks_race(banner, badge, gameDeck);
 }
 

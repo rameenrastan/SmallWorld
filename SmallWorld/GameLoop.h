@@ -26,8 +26,8 @@ public:
 	void determineTurnOrder();
 	void generateRaceCombo();
 	void playerPicksRace(Player* player);
+	void playerInDecline(Player* player);
 	vector <pair<Banner, Badge>> pairs;
-	vector<Player*> players;
 	void mainLoop();
 	void followingTurn(Player* player);
 	GameLoop();
