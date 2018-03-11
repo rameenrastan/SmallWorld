@@ -49,7 +49,6 @@ bool Map::isConnected()
 	cout << "Regions Visited (Connected): " << visited.size() << endl;
 	cout << "Total number of regions: " << regions.size() << endl;
 
-
 	if (visited.size() == regions.size())
 	{
 		cout << "Map Valid: This graph is connected!" << endl;
@@ -60,6 +59,28 @@ bool Map::isConnected()
 		cout << "Map Invalid: This graph is not connected!" << endl;
 		return false;
 	}
+}
+
+void Map::displayRegionList()
+{
+	for (auto & region : regions)
+	{
+		cout << "Region name: " << (*region).getRegionName() << " Type: ";
+		if ((*region).hasMountain())
+		{
+			cout << " (Mountain) " << endl;
+		}
+		else if ((*region).hasLostTribe())
+		{
+			cout << " (Lost Tribe) " << endl;
+		}
+		else
+		{
+			cout << "Current Number of Tokens: " << (*region).getNumTokens() << endl;
+		}
+		
+	}
+
 }
 
 Map::Map(vector<Region*> r)

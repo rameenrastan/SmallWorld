@@ -27,12 +27,14 @@ void GameLoop::initializeGame()
 		cout << "2 Player Mode Selected." << endl;
  		players.push_back(new Player("Player1"));
 		players.push_back(new Player("Player2"));
+		numTurns = 10;
 		break;
 	case 3:
 		cout << "3 Player Mode Selected." << endl;
 		players.push_back(new Player("Player1"));
 		players.push_back(new Player("Player2"));
 		players.push_back(new Player("Player3"));
+		numTurns = 10;
 		break;
 	case 4:
 		cout << "4 Player Mode Selected." << endl;
@@ -40,6 +42,7 @@ void GameLoop::initializeGame()
 		players.push_back(new Player("Player2"));
 		players.push_back(new Player("Player3"));
 		players.push_back(new Player("Player4"));
+		numTurns = 9;
 		break;
 	case 5:
 		cout << "5 Player Mode Selected." << endl;
@@ -48,12 +51,13 @@ void GameLoop::initializeGame()
 		players.push_back(new Player("Player3"));
 		players.push_back(new Player("Player4"));
 		players.push_back(new Player("Player5"));
+		numTurns = 8;
 		break;
 	}
 
 	cout << "Initializing all game pieces..." << endl;
 	gameDeck = GameDeck();
-	gameDeck.showDeckInfo();
+	//gameDeck.showDeckInfo();
 	
 }
 
@@ -97,6 +101,7 @@ void GameLoop::startUpPhase()
 
 	placeMountainAndLostTribe();
 	distributeInitialVictoryCoins();
+	determineTurnOrder();
 }
 
 void GameLoop::distributeInitialVictoryCoins()
@@ -251,22 +256,49 @@ void GameLoop::mainLoop()
 			cout << (*player).getPlayerName() << " conquers some regions." << endl;
 			cout << (*player).getPlayerName() << " scores some Victory coins." << endl;
 		}
-		cout << "Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
+		cout << "First Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
 
 	//FOLLOWING TURNS
-	while (gameTurnMarker <= 8)
+	while (gameTurnMarker <= numTurns)
 	{
 		for (auto & player : players)
 		{
-			cout << (*player).getPlayerName() << "'s turn." << endl;
-			//hard coded empty behavior for picking race/power combo, conquering regions, and gaining victory coins.
-			cout << (*player).getPlayerName() << " picks a race/power combo." << endl;
-			cout << (*player).getPlayerName() << " conquers some regions." << endl;
-			cout << (*player).getPlayerName() << " scores some Victory coins." << endl;
+			cout << (*player).getPlayerName() << " performs following turn. (Conquers new regions or puts race In Decline." << endl;
 		}
-
+		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
+
+	cout << "Game Finished! The player with the highest number of Victory Coins in the winnter!" << endl;
+}
+
+void GameLoop::followingTurn(Player* player)
+{
+	cout << "Select an option:" << endl;
+	cout << "1. Expand the reach of your race through new conquests." << endl;
+	cout << "2. Put your race In Decline to select a new one." << endl;
+
+	int choice;
+	cin >> choice;
+
+	string regionName;
+
+	switch(choice)
+	{
+		case 1:
+			cout << "You currently have " << (*player).getTokenCount() << endl;
+			cout << (*player).getPlayerName() << endl;
+			cout << "Please write the name of the region you wish to conquer from the list:" << endl;
+			gameMap.displayRegionList();
+			//conquer options
+
+			break;
+
+		case 2:
+			//put in decline
+			break;
+	}
+
 }
 
 GameLoop::GameLoop()

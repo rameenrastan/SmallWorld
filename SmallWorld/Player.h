@@ -22,6 +22,7 @@ private:
 	vector<Region*> ownedRegions;
 	Badge badge;
 	Banner race;
+	Dice dice;
 	int regionCount;
 	int tokenCount;
 	int victoryCoinCount;
@@ -30,7 +31,7 @@ public:
 	Player();
 	Player(string);
 	~Player();
-
+	vector<Region*> ownedRegions;
 	string getPlayerName();
 	int reinforcementRoll(Dice* dice);
 	void displayRollPercentages(Dice* dice);
@@ -39,11 +40,13 @@ public:
 	int getVictoryCoinCount();
 	void setVictoryCoinCount(int v);
 	bool checkRegionAdjacency(Region* region);
-	
-
 	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
-	void conquers(Region* &region);
+	void conquers(Region* &region, bool finalConquest);
 	void scores(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void summarySheet(Banner banner, Badge bad);
+	void redeployTroops(Region* r1, Region* r2, int tokens);
+	void readyTroops();
+	void abandonRegion(Region* r);
+	void redeployTroops();
 };
 

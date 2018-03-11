@@ -14,11 +14,11 @@ class GameLoop
 {
 private:
 	int gameTurnMarker;
+	int numTurns;
 	Map gameMap;
 	GameDeck gameDeck;
-	
-	
 public:
+	vector<Player*> players;
 	void initializeGame();
 	void placeMountainAndLostTribe();
 	void startUpPhase();
@@ -29,6 +29,7 @@ public:
 	vector <pair<Banner, Badge>> pairs;
 	vector<Player*> players;
 	void mainLoop();
+	void followingTurn(Player* player);
 	GameLoop();
 	~GameLoop();
 };
