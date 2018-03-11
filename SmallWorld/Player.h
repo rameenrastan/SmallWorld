@@ -8,6 +8,7 @@
 #include "VictoryCoin.h"
 #include "Dice.h"
 #include "GameDeck.h"
+#include "GameLoop.h"
 
 using namespace std;
 
@@ -18,8 +19,9 @@ class Player
 {
 private:
 	string playerName;
-	vector<Badge> badge;
-	vector<Banner> race;
+	vector<Region*> ownedRegions;
+	Badge badge;
+	Banner race;
 	Dice dice;
 	int regionCount;
 	int tokenCount;
