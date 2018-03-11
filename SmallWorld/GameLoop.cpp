@@ -101,6 +101,7 @@ void GameLoop::startUpPhase()
 
 	placeMountainAndLostTribe();
 	distributeInitialVictoryCoins();
+	determineTurnOrder();
 }
 
 void GameLoop::distributeInitialVictoryCoins()
