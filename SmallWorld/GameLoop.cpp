@@ -18,9 +18,13 @@ void GameLoop::initializeGame()
 	cin >> mapFileName;
 	}
 	gameMap = ml.loadMap(mapFileName);
-	cout << "Please enter the number of players in the game:" << endl;
+	cout << "Please enter the number of players in the game (2 to 5):" << endl;
 	cin >> numPlayers;
-
+	while (numPlayers < 2 || numPlayers > 5)
+	{
+		cout << "Invalid player count, please select 2 to 5 Players:" << endl;
+		cin >> numPlayers;
+	}
 	switch (numPlayers)
 	{
 	case 2: 
