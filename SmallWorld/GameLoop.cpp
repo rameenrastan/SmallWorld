@@ -122,7 +122,7 @@ void GameLoop::distributeInitialVictoryCoins()
 void GameLoop::determineTurnOrder()
 {
 	string playerName;
-	cout << "Which player has the most pointed ears?" << endl;
+	cout << "\nWhich player has the most pointed ears?" << endl;
 	cin >> playerName;
 
 	for (int i = 0; i < players.size(); i++)
@@ -190,24 +190,21 @@ void GameLoop::generateRaceCombo()
 	random_shuffle(begin(badges), end(badges));
 
 	pair <Banner, Badge> combo;
-	cout << "Race/Power Combos:" << endl;
+	cout << "\nRace/Power combos available:" << endl;
 	for (int i = 0; i < 14; i++) {
 		combo = make_pair(banners[i], badges[i]);
 		pairs.push_back(combo);
 	}
 	for (int i = 0; i < 6; i++){
-		cout << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
+		cout << i << ". " << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
 		}
 
 
 }
 void GameLoop::playerPicksRace(Player* player)
 {
-	cout << "Please type the number of the race power combo you would like to select:" << endl;
+	cout << "\nPlease type the number of the race power combo you would like to select:" << endl;
 	int option;
-	for (int i = 0; i < 6; i++) {
-		cout << i <<". "<< pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
-	}
 	cin >> option;
 	switch (option) {
 		case 0:
@@ -241,7 +238,7 @@ void GameLoop::playerPicksRace(Player* player)
 			pairs.erase(pairs.begin() + 5);
 			break;
 	}
-	cout << "Updated list of race power combos: " << endl;
+	cout << "\nUpdated list of race power combos: " << endl;
 	for (int i = 0; i < 6; i++) {
 		cout << i << ". " << pairs[i].second.getBadgeName() << " " << pairs[i].first.getRaceName() << endl;
 	}

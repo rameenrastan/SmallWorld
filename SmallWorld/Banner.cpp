@@ -45,7 +45,7 @@ string Banner::getRaceName()
 		return "SKELETONS";
 		break;
 	case 6: //SORCERERS
-		return "SORCERORS";
+		return "SORCERERS";
 		break;
 	case 7: //TRITONS
 		return "TRITONS";
