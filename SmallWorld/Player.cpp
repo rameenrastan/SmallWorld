@@ -689,6 +689,7 @@ void Player::summarySheet()
 	cout << "Number of victoy coins: " << getVictoryCoinCount() << endl;
 }
 
+//allows a player to redeploy troops from one region to another (as long as at least 1 token remains in the initial region)
 void Player::redeployTroops(Region * r1, Region * r2, int tokens)
 {
 	cout << "Deploying troops from " << r1->getRegionName() << " to " << r2->getRegionName() << endl;
@@ -707,6 +708,7 @@ void Player::redeployTroops(Region * r1, Region * r2, int tokens)
 
 }
 
+//allows a player to perform "Ready Troops" (taking all but 1  race token from each owned region and placing it back in hand)
 void Player::readyTroops()
 {
 	cout << "Ready your troops: taking all but 1 Race Token from each of your Regions back in hand." << endl;
@@ -719,6 +721,7 @@ void Player::readyTroops()
 	cout << "You now have " << tokenCount << " race tokens in hand." << endl;
 }
 
+//allows a player to abandon a region and place the tokens back in hand
 void Player::abandonRegion(Region * r)
 {
 	cout << "Abandoning Region " << r->getRegionName() << endl;
@@ -734,6 +737,18 @@ void Player::abandonRegion(Region * r)
 		}
 	}
 	r->setOwned(false);
+}
+
+//player goes in decline: switches their race/power combo and removes all but 1 token from each owned region from the previous race
+void Player::decline(Banner banner, Badge badge, GameDeck* const & gameDeck)
+{
+	for (auto & region : ownedRegions)
+	{
+		cout << "Removing " << region->getNumTokens() - 1 << " race tokens from owned region " << region->getRegionName() << endl;
+		region->setNumTokens(1);
+	}
+	cout << "Switching Race/Power combo to " << badge.getBadgeName() << " " << banner.getRaceName() << endl;
+	picks_race(banner, badge, gameDeck);
 }
 
 void Player::redeployTroops()
@@ -773,16 +788,5 @@ void Player::redeployTroops()
 			}
 		}
 	}
-}
-
-void Player::decline(Banner banner, Badge badge, GameDeck* const & gameDeck)
-{
-	for (auto & region : ownedRegions)
-	{
-		cout << "Removing " << region->getNumTokens() - 1 << " race tokens from owned region " << region->getRegionName() << endl;
-		region->setNumTokens(1);
-	}
-	cout << "Switching Race/Power combo to " << badge.getBadgeName() << " " << banner.getRaceName() << endl;
-	picks_race(banner, badge, gameDeck);
 }
 
