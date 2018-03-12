@@ -12,7 +12,8 @@ Player::Player(string name)
 	playerName = name;
 	regionCount = 0;
 	tokenCount = 0;
-	victoryCoinCount = 0;
+	victoryCoinCount = 5;
+	raceInDecline = false;
 }
 
 Player::~Player()
@@ -54,6 +55,11 @@ int Player::getVictoryCoinCount(){
 
 void Player::setVictoryCoinCount(int v) {
 	victoryCoinCount = v;
+}
+
+bool Player::getRaceInDecline()
+{
+	return raceInDecline;
 }
 
 /*
@@ -492,19 +498,26 @@ allocates victory coins to players based on number of regions owned and race abi
 */
 void Player::scores(GameDeck*const &gamedeck)
 {
+	cout << "\nEnd of turn, tallying up victory coins based on number of regions owned and special powers..." << endl;
+
+	int currentTurnPoints = 0; //tracks the number of victory points earned in the current turn
+
 	for (int i = 0; i < ownedRegions.size(); i++) {   
 		victoryCoinCount++;	//give 1 coin for every region owned
+		currentTurnPoints++;
 		(*gamedeck).setGameCoin(1);		
 		switch (race.getRaceType()) {  //allocating victory coins based on race type
 			case 1: //DWARVES
 				if ((*ownedRegions[i]).hasMine()) {   //give 1 extra coin for each mine region a dwarf owns
 					victoryCoinCount++;
+					currentTurnPoints++;
 					(*gamedeck).setGameCoin(1);
 				}
 				break;
 			case 10: //HUMANS
 				if ((*ownedRegions[i]).isFarmland()) { //give 1 extra coin for each farm region a human owns
 					victoryCoinCount++;
+					currentTurnPoints++;
 					(*gamedeck).setGameCoin(1);
 				}
 				break;
@@ -514,6 +527,7 @@ void Player::scores(GameDeck*const &gamedeck)
 			case 13: //WIZARDS
 				if ((*ownedRegions[i]).isMagic()) { //give 1 extra coin for each magic region a wizard owns
 					victoryCoinCount++;
+					currentTurnPoints++;
 					(*gamedeck).setGameCoin(1);
 				}
 		}
@@ -521,12 +535,14 @@ void Player::scores(GameDeck*const &gamedeck)
 	switch (badge.getBadgeType()) {  //allocating victory coins based on badge type
 		case 0: //ALCHEMIST
 			victoryCoinCount += 2;   //gives 2 extra coins per turn 
+			currentTurnPoints+= 2;
 			(*gamedeck).setGameCoin(2);
 			break;
 		case 7: //FOREST
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isForest()) { //give 1 extra coin for each forest region owned
 					victoryCoinCount++;
+					currentTurnPoints++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
@@ -535,6 +551,7 @@ void Player::scores(GameDeck*const &gamedeck)
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isFortress()) { //give 1 extra coin for each fortress on a region owned
 					victoryCoinCount++;
+					currentTurnPoints++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
@@ -543,6 +560,7 @@ void Player::scores(GameDeck*const &gamedeck)
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isHill()) { //give 1 extra coin for each hill region owned
 					victoryCoinCount++;
+					currentTurnPoints++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
@@ -550,6 +568,7 @@ void Player::scores(GameDeck*const &gamedeck)
 		case 11: //MERCHANT
 			for (int i = 0; i < ownedRegions.size(); i++) {  //give 1 extra coin for each region owned
 				victoryCoinCount++;
+				currentTurnPoints++;
 			}
 			break;
 		case 13: //PILLAGING
@@ -559,6 +578,7 @@ void Player::scores(GameDeck*const &gamedeck)
 			for (int i = 0; i < ownedRegions.size(); i++) {
 				if ((*ownedRegions[i]).isSwamp()) { //give 1 extra coin for every swamp region owned
 					victoryCoinCount++;
+					currentTurnPoints++;
 					(*gamedeck).setGameCoin(1);
 				}
 			}
@@ -567,6 +587,7 @@ void Player::scores(GameDeck*const &gamedeck)
 			//should receive 7 extra coins on only first round active
 			break;
 	}
+	cout << "Received " << currentTurnPoints << " victory coins this turn, which brings total victory coin tally to: " << getVictoryCoinCount() << endl;
 }
 
 /*
@@ -578,6 +599,7 @@ Displays the information of the player. Name,race,badge,tokens,victory coins.
 */
 void Player::summarySheet()
 {
+	cout << "\n" << getPlayerName() << " information:" << endl;
 	cout << "Name: " << getPlayerName() << endl;
 	switch (race.getRaceType()) {
 	case 0: //AMAZONS
@@ -684,9 +706,14 @@ void Player::summarySheet()
 	case 19: //WEALTHY
 		cout << "Current badge: WEALTHY" << endl;
 		break;
+	} 
+	cout << "Declined race: ";
+	if (getRaceInDecline()) {
+		cout << "Yes" << endl;
 	}
+	else cout << "No" << endl;
 	cout << "Number of tokens available: " << getTokenCount() << endl;
-	cout << "Number of victoy coins: " << getVictoryCoinCount() << endl;
+	cout << "Number of victory coins: " << getVictoryCoinCount() << endl << endl;
 }
 
 //allows a player to redeploy troops from one region to another (as long as at least 1 token remains in the initial region)
@@ -742,12 +769,15 @@ void Player::abandonRegion(Region * r)
 //player goes in decline: switches their race/power combo and removes all but 1 token from each owned region from the previous race
 void Player::decline(Banner banner, Badge badge, GameDeck* const & gameDeck)
 {
+	cout << "\nDeclining current race..." << endl;
 	for (auto & region : ownedRegions)
 	{
 		cout << "Removing " << region->getNumTokens() - 1 << " race tokens from owned region " << region->getRegionName() << endl;
 		region->setNumTokens(1);
 	}
-	cout << "Switching Race/Power combo to " << badge.getBadgeName() << " " << banner.getRaceName() << endl;
+	raceInDecline = true;
+	tokenCount = 0;
+	cout << "\nSwitching Race/Power combo to " << badge.getBadgeName() << " " << banner.getRaceName() << endl;
 	picks_race(banner, badge, gameDeck);
 }
 

@@ -9,7 +9,7 @@ void GameLoop::initializeGame()
 	string mapFileName; 
 	MapLoader ml;
 
-	cout << "Starting a &game of Small World!" << endl;
+	cout << "Starting a game of Small World!" << endl;
 	cout << "Please enter the name of the map:" << endl;
 	cin >> mapFileName;
 
@@ -327,7 +327,7 @@ void GameLoop::mainLoop()
 		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
 
-	cout << "Game Finished! The player with the highest number of Victory Coins in the winnter!" << endl;
+	cout << "Game Finished! The player with the highest number of Victory Coins is the winner!" << endl;
 }
 
 //gives user options in following turns

@@ -25,6 +25,7 @@ private:
 	int regionCount;
 	int tokenCount;
 	int victoryCoinCount;
+	bool raceInDecline;
 	
 public:
 	Player();
@@ -38,6 +39,8 @@ public:
 	int getTokenCount();
 	int getVictoryCoinCount();
 	void setVictoryCoinCount(int v);
+	bool getRaceInDecline();
+
 	bool checkRegionAdjacency(Region* region);
 	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void conquers(Region* &region, bool finalConquest);
