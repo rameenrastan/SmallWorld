@@ -310,9 +310,35 @@ void GameLoop::mainLoop()
 		{
 			cout << (*player).getPlayerName() << "'s turn." << endl;
 			//hard coded empty behavior for picking race/power combo, conquering regions, and gaining victory coins.
-			cout << (*player).getPlayerName() << " picks a race/power combo." << endl;
-			cout << (*player).getPlayerName() << " conquers some regions." << endl;
-			cout << (*player).getPlayerName() << " scores some Victory coins." << endl;
+			cout << (*player).getPlayerName() << " must pick a race/power combo." << endl;
+			playerPicksRace(player);
+			cout << (*player).getPlayerName() << " must conquer some regions." << endl;
+
+			gameMap.displayRegionList();
+
+			while ((*player).getTokenCount() > 0)
+			{
+				string choice;
+				cout << "Which region would you like to conquer? (type N to end conquest)" << endl;
+				cin >> choice;
+
+				if (choice == "N")
+				{
+					cout << "Conquest ended!" << endl;
+					break;
+				}
+				else {
+					for (auto & region : gameMap.regions)
+					{
+						if (region->getRegionName() == choice)
+						{
+							(*player).conquers(region, true);
+						}
+					}
+				}
+
+			}
+			(*player).scores(&gameDeck);
 		}
 		cout << "First Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
@@ -322,7 +348,7 @@ void GameLoop::mainLoop()
 	{
 		for (auto & player : players)
 		{
-			cout << (*player).getPlayerName() << " performs following turn. (Conquers new regions or puts race In Decline." << endl;
+			followingTurn(player);
 		}
 		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}

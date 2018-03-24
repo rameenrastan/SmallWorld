@@ -65,7 +65,7 @@ void Map::displayRegionList()
 {
 	for (auto & region : regions)
 	{
-		cout << "Region name: " << (*region).getRegionName() << " Type: ";
+		cout << "Region name: " << (*region).getRegionName();
 		if ((*region).hasMountain())
 		{
 			cout << " (Mountain) " << endl;
@@ -74,11 +74,22 @@ void Map::displayRegionList()
 		{
 			cout << " (Lost Tribe) " << endl;
 		}
+		else if (region->isOwned())
+		{
+			cout << " (Owned) " << endl;
+		}
 		else
 		{
-			cout << "Current Number of Tokens: " << (*region).getNumTokens() << endl;
+			cout << " Current Number of Tokens: " << (*region).getNumTokens() << endl;
+		}
+
+		cout << "Neighbors: ";
+		for (auto & neighbor : region->getNeighbors())
+		{
+			cout << neighbor->getRegionName() << "  ";
 		}
 		
+		cout << endl;
 	}
 
 }

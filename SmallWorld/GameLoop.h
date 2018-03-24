@@ -7,13 +7,14 @@
 #include "Banner.h"
 #include "Badge.h"
 #include <algorithm>
+#include "Subject.h"
 
 using namespace std;
 
 /*
 This class is the body of the program: it contains the logic of the Game Loop (from initializing/starting a game to handling all turn-based logic)
 */
-class GameLoop
+class GameLoop : public Subject
 {
 private:
 	int gameTurnMarker;
@@ -22,6 +23,7 @@ private:
 	GameDeck gameDeck;
 public:
 	vector<Player*> players;
+	int getTurn() { return gameTurnMarker; };
 	void initializeGame();
 	void placeMountainAndLostTribe();
 	void startUpPhase();

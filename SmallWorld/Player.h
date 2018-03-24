@@ -12,13 +12,13 @@
 
 using namespace std;
 
+class Region;
 /*
 Implements the functionality of a player playing the Small World game.
 */
 class Player
 {
 private:
-	string playerName;
 	Badge badge;
 	Banner race;
 	Dice dice;
@@ -31,6 +31,7 @@ public:
 	Player();
 	Player(string);
 	~Player();
+	string playerName;
 	vector<Region*> ownedRegions;
 	string getPlayerName();
 	int reinforcementRoll(Dice* dice);
