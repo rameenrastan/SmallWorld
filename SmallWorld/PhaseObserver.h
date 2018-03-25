@@ -8,5 +8,6 @@ public:
 	~PhaseObserver();
 	void update();
 	void display();
+
 };
 
