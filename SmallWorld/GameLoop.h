@@ -19,11 +19,13 @@ class GameLoop : public Subject
 private:
 	int gameTurnMarker;
 	int numTurns;
+	string phase;
 	Map gameMap;
 	GameDeck gameDeck;
 public:
 	vector<Player*> players;
 	int getTurn() { return gameTurnMarker; };
+	string getPhase() { return phase; };
 	void initializeGame();
 	void placeMountainAndLostTribe();
 	void startUpPhase();

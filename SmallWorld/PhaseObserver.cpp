@@ -11,6 +11,11 @@ PhaseObserver::~PhaseObserver()
 {
 }
 
+void PhaseObserver::update()
+{
+	
+}
+
 void PhaseObserver::display()
 {
 

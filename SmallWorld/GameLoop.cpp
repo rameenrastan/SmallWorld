@@ -5,6 +5,8 @@
 //initializes a game based on user input settings (map name, number of players, etc.)
 void GameLoop::initializeGame()
 {
+	phase = "Initializing Game";
+
 	int numPlayers;
 	string mapFileName; 
 	MapLoader ml;
@@ -103,6 +105,8 @@ void GameLoop::placeMountainAndLostTribe()
 //Start Up Phase (places turn marker to start, places mountain/lost tribe tokens, distributes victory coins, determines turn order, generates 6 race/power combos)
 void GameLoop::startUpPhase()
 {
+	phase = "Start Up Phase";
+
 	cout << "Placing the Game Turn Marker to the starting position." << endl;
 	gameTurnMarker = 1;
 
