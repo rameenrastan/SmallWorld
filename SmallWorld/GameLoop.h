@@ -20,10 +20,13 @@ private:
 	int gameTurnMarker;
 	int numTurns;
 	string phase;
-	Map gameMap;
 	GameDeck gameDeck;
+	Player* currentPlayer;
 public:
+	Map gameMap;
+	Player* getCurrentPlayer() { return currentPlayer; };
 	vector<Player*> players;
+	vector<Player*> getPlayers() { return players; };
 	int getTurn() { return gameTurnMarker; };
 	string getPhase() { return phase; };
 	void initializeGame();

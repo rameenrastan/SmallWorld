@@ -312,10 +312,17 @@ void GameLoop::mainLoop()
 		cout << "First Turn: Each Player will pick a Race/Special Power Combo, Conquer Some Regions, and score some Victory Coins." << endl;
 		for (auto & player : players)
 		{
+			currentPlayer = player;
+
 			cout << (*player).getPlayerName() << "'s turn." << endl;
-			//hard coded empty behavior for picking race/power combo, conquering regions, and gaining victory coins.
+
 			cout << (*player).getPlayerName() << " must pick a race/power combo." << endl;
+			
+			phase = "Picks Race";
 			playerPicksRace(player);
+			notify();
+
+			phase = "Conquer Regions";
 			cout << (*player).getPlayerName() << " must conquer some regions." << endl;
 
 			gameMap.displayRegionList();
@@ -342,7 +349,11 @@ void GameLoop::mainLoop()
 				}
 
 			}
+			notify();
+
+			phase = "Scores";
 			(*player).scores(&gameDeck);
+			notify();
 		}
 		cout << "First Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
