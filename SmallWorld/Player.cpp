@@ -299,7 +299,53 @@ void Player::conquers(Region* &region, bool finalConquest)
 	}
 
 	if (checkRegionAdjacency(region) || ownedRegions.size() == 0) {
-		if ((*region).hasMountain())
+		if (!region->hasLostTribe() && !region->hasMountain() && !region->isOwned())
+		{
+			if (tokenCount > 1) {
+				ownedRegions.push_back(region);
+				tokenCount = tokenCount - 2;
+				(*region).setOwned(true);
+				(*region).setNumTokens(2);
+				(*region).setOwner(this);
+				regionCount++;
+				cout << playerName << " has conquered empty region " << (*region).getRegionName() << endl;
+			}
+			else if (finalConquest && tokenCount > 0)
+			{
+				string choice;
+				cout << "You do not have enough tokens to conquer this empty region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cin >> choice;
+
+				if (choice == "Y" || choice == "y" || choice == "yes")
+				{
+					int roll = reinforcementRoll(&dice);
+					if (roll + tokenCount > 1)
+					{
+						cout << "You have rolled a " << roll << " and have successfully conquered the empty region!" << endl;
+						ownedRegions.push_back(region);
+						(*region).setOwned(true);
+						(*region).setNumTokens(tokenCount);
+						(*region).setOwner(this);
+						tokenCount = 0;
+						regionCount++;
+						cout << playerName << " has conquered empty region " << (*region).getRegionName() << endl;
+					}
+					else {
+						cout << "The roll was not high enough to conquer this region!" << endl;
+					}
+				}
+				else
+				{
+					cout << "You chose not to use a reinforcement roll. You are done your conquest for this turn." << endl;
+					return;
+				}
+
+			}
+			else {
+				cout << "You do not have enough tokens to conquer this region!" << endl;
+			}
+		}
+		else if ((*region).hasMountain())
 		{
 			if (tokenCount > 2) {
 				ownedRegions.push_back(region);
@@ -399,15 +445,43 @@ void Player::conquers(Region* &region, bool finalConquest)
 		{
 			if (tokenCount >= (*((*region).getOwner())).getTokenCount() + 2)
 			{
+			
+				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
+				for (int i = 0; i < region->getOwner()->ownedRegions.size(); i++) {
+					if (region->getOwner()->ownedRegions[i]->getRegionName() == region->getRegionName()) {
+						cout << "Removing region " << region->getOwner()->ownedRegions[i]->getRegionName() << " from " << region->getOwner()->getPlayerName() << "'s owned regions." << endl;
+						region->getOwner()->ownedRegions.erase(region->getOwner()->ownedRegions.begin() + i);
+					}
+				}
 				tokenCount = tokenCount - 2;
 				(*region).setNumTokens((*region).getNumTokens() + 2);
 				ownedRegions.push_back(region);
 				(*region).setOwner(this);
-				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 			}
 			else {
 				cout << "You do not have enough tokens to conquer this region!" << endl;
 			}
+
+
+		/*	cout << "Abandoning Region " << r->getRegionName() << endl;
+			cout << "Gaining " << r->getNumTokens() << " tokens back in hand." << endl;
+			tokenCount += r->getNumTokens();
+			r->setNumTokens(0);
+			for (int i = 0; i < ownedRegions.size(); i++)
+			{
+				if (ownedRegions[i]->getRegionName() == r->getRegionName())
+				{
+					cout << "Removing region " << ownedRegions[i]->getRegionName() << " from your owned regions." << endl;
+					ownedRegions.erase(ownedRegions.begin() + i);
+				}
+			}
+			r->setOwned(false);*/
+
+
+
+
+
+
 		}
 		else if (finalConquest && (*((*region).getOwner())).getTokenCount() -1)
 		{
@@ -485,6 +559,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 				cout << "You do not have enough tokens to conquer this region!" << endl;
 			}
 		}
+
 	}
 	else {
 
@@ -492,6 +567,31 @@ void Player::conquers(Region* &region, bool finalConquest)
 	}
 	cout << playerName << " has " << tokenCount << " race tokens remaining." << endl;
 }
+
+/*
+Displays the regions owned by a player and its information (neighbours, tokens)
+*/
+
+void Player::displayOwnedRegions()
+{
+	cout << "Displaying list of owned regions:" << endl;
+	for (auto & region : ownedRegions)
+	{
+		cout << "Region name: " << (*region).getRegionName();
+		cout << " (" << (*region).getNumTokens() << " tokens on region)" <<endl;
+		
+
+		cout << "Neighbors: ";
+		for (auto & neighbor : region->getNeighbors())
+		{
+			cout << neighbor->getRegionName() << "  ";
+		}
+
+		cout << endl;
+	}
+
+}
+
 
 /*
 allocates victory coins to players based on number of regions owned and race abilities
@@ -738,7 +838,7 @@ void Player::redeployTroops(Region * r1, Region * r2, int tokens)
 //allows a player to perform "Ready Troops" (taking all but 1  race token from each owned region and placing it back in hand)
 void Player::readyTroops()
 {
-	cout << "Ready your troops: taking all but 1 Race Token from each of your Regions back in hand." << endl;
+	cout << "Readying your troops: taking all but 1 Race Token from each of your Regions back in hand." << endl;
 	for (auto & region : ownedRegions)
 	{
 		cout << "Removing " << region->getNumTokens() - 1 << " tokens from region " << region->getRegionName() << endl;
@@ -804,7 +904,7 @@ void Player::redeployTroops()
 				int num;
 				cin >> num;
 			}
-
+			region->setNumTokens(region->getNumTokens() - num);
 			cout << "To  which region would you like to move these tokens to?" << endl;
 			string regionName;
 			cin >> regionName;
@@ -819,4 +919,3 @@ void Player::redeployTroops()
 		}
 	}
 }
-

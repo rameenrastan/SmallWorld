@@ -363,31 +363,119 @@ void GameLoop::mainLoop()
 //gives user options in following turns
 void GameLoop::followingTurn(Player* player)
 {
-	cout << "Select an option:" << endl;
-	cout << "1. Expand the reach of your race through new conquests." << endl;
-	cout << "2. Put your race In Decline to select a new one." << endl;
+	cout << (*player).getPlayerName() << "'s turn:" << endl;
+	player->readyTroops();
+	bool playerTurn = true;
+	while (playerTurn) {
+		cout << "Please choose what you would like to do:" << endl;
+		cout << "1. Conquer new regions." << endl;
+		cout << "2. Abandon regions." << endl;
+		cout << "3. Put your race in decline and select a new one (ends your turn)." << endl;
+		cout << "4. Redeploy your troops (ends your turn)." << endl;
+		cout << "5. Consult summary sheet." << endl;
 
-	int choice;
-	cin >> choice;
+		char choice;
+		string regionName;
+		string redeploy;
+		string decline;
 
-	string regionName; 
+		cin >> choice ;
+ 
+			switch (choice)
+			{
+			case '1': //conquer
+				cout << "You currently have " << (*player).getTokenCount() << " tokens." << endl;
+				cout << "Please write the name of the region you wish to conquer from the list: (type N to cancel)" << endl;
+				gameMap.displayRegionList();
+				cin >> regionName;
+				if (regionName == "N")
+				{
+					cout << "Conquest cancelled..." << endl;
+					break;
+				}
+				else {
+					for (auto & region : gameMap.regions)
+					{
+						if (region->getRegionName() == regionName)
+						{
+							(*player).conquers(region, true);
+						}
+					}
+				}
+				break;
 
-	switch(choice)
-	{
-		case 1:
-			cout << "You currently have " << (*player).getTokenCount() << endl;
-			cout << (*player).getPlayerName() << endl;
-			cout << "Please write the name of the region you wish to conquer from the list:" << endl;
-			gameMap.displayRegionList();
-			//conquer options
+			case '2': //abandon
+				//need to display list of regions owned 
+				if (player->ownedRegions.empty()) {
+					cout << "You currently do not own any regions. Abandoning cancelled..." << endl;
+					break;
+				}
+				cout << "Please write the name of the region you wish to abandon? (type N to cancel)" << endl;
+				player->displayOwnedRegions();
+				cin >> regionName;
+				if (regionName == "N")
+				{
+					cout << "Abandoning cancelled..." << endl;
+					break;
+				}
+				else {
+					for (auto & region : player->ownedRegions)
+					{
+					 if (region->getRegionName() == regionName)
+						{
+							(*player).abandonRegion(region);
+						}
+					}
+				}
 
-			break;
+				break;
+			
+			case '3': //decline
+				cout << "You have chosen to decline your race, this action cannot be reversed." << endl;
+				cout << "Press any key to proceed, type N to cancel." << endl;
+				cin >> decline;
+				if (decline == "N") {
+					cout << "Decline cancelled..." << endl;
+					break;
+				}
+				else {
+					playerInDecline(player);
+					playerTurn = false;
+				}
+				break;
 
-		case 2:
-			//put in decline
-			break;
-	}
+			case '4':  //redeploy here/end turn with the c=false
+				cout << "You have chosen to redeploy your troops, your turn will end once you are done." << endl;
+				cout <<	"Press any key to proceed, type N to cancel." << endl;
+				cin >> redeploy;
+				if (redeploy == "N") {
+					cout << "Redeployment cancelled..." << endl;
+					break;
+				}
+				else {
+					player->redeployTroops();
+					while (playerTurn) {
+						cout << "To finish redeploying and end your turn, type Y." << endl;
+						cout << "To continue redeploying, press any key." << endl;
+						cin >> redeploy;
+						if (redeploy == "Y") {
+							playerTurn = false;
+						}
+						else {
+							player->redeployTroops();
+						}
+					}
+				}
+				break;
 
+			case '5':  //testing purposes
+				player->summarySheet();
+				break;
+			default:
+				cout << "Invalid input, please select again." << endl;
+				break;
+			}
+		}
 }
 
 GameLoop::GameLoop()
