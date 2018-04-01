@@ -22,9 +22,14 @@ void GameStatisticsObserver::update()
 
 	//Basic (Undecorated) Game Statistics Observer functionality: displays Turn Number
 
-	int turnNumber = subject->getTurn();
+	int currentTurn = subject->getTurn();
 
-	cout << "Turn Number: " << turnNumber << endl;
+	//checks if turn number has increased (update the view to display the current turn number if so)
+	if (currentTurn > turnNumber)
+	{
+		cout << "Turn Number: " << currentTurn << endl;
+		turnNumber = currentTurn;
+	}
 	
 }
 

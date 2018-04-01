@@ -25,9 +25,9 @@ void PhaseObserver::update()
 
 	cout << "Turn " << turnNumber << ": " << player->getPlayerName() << " " << phase << endl;
 	
-	if (phase == "Picks Race")
+	if (phase == "Picks Race" || phase == "Indecline")
 	{
-		cout << player->getPlayerName() << " updated race/power combo: " << endl; 
+		cout << player->getPlayerName() << " updated race/power combo to : " << player->getRaceName() << " " << player->getBadgeName() << endl; 
 	}
 	else if (phase == "Conquer Regions")
 	{

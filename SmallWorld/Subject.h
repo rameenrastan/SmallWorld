@@ -14,7 +14,7 @@ public:
 	void notify();
 	Subject();
 	~Subject();
-private:
+protected:
 	vector<Observer*> observers;
 };
 

@@ -1,6 +1,53 @@
 #include "stdafx.h"
 #include "GameLoop.h"
+#include "GameStatisticsObserver.h"
+#include "PlayerDominationObserver.h"
+#include "PlayerHandsObserver.h"
+#include "VictoryCoinsObserver.h"
 
+void GameLoop::addDecorator()
+{
+	cout << "Would you like to add a decorator to the Game Statistics Observer?" << endl;
+	cout << "1. Add Player Domination Observer Decorator" << endl;
+	cout << "2. Add Player Hands  Observer Decorator" << endl;
+	cout << "3. Add Victory Coins Observer Decorator" << endl;
+	cout << "4. Remove Current Decorator" << endl;
+	cout << "5. No." << endl;
+	cout << "6. No (and don't ask again!)" << endl;
+
+	int choice;
+	cin >> choice;
+
+	if (choice == 1)
+	{
+		//decorates Game Statistics Observer with Player Domination Observer
+		observers[1] = new GameStatisticsObserver(this);
+		observers[1] = new PlayerDominationObserver(dynamic_cast<GameStatisticsObserver*>(observers[1]));
+	}
+	else if(choice == 2)
+	{
+		//decorates Game Statistics Observer with Player Hands Observer
+		observers[1] = new GameStatisticsObserver(this);
+		observers[1] = new PlayerHandsObserver(dynamic_cast<GameStatisticsObserver*>(observers[1]));
+	}
+	else if (choice == 3)
+	{
+		//decorates Game Statistics Observer with Victory Coins Observer
+		observers[1] = new GameStatisticsObserver(this);
+		observers[1] = new VictoryCoinsObserver(dynamic_cast<GameStatisticsObserver*>(observers[1]));
+	}
+	else if (choice == 4)
+	{
+		//removes current decoration of Game Statistics Observer
+		observers[1] = new GameStatisticsObserver(this);
+	}
+	else if (choice == 6)
+	{
+		//will not ask user if they wish to decorate the Game Statistics Observer anymore
+		decoratorRequest = false;
+	}
+
+}
 
 //initializes a game based on user input settings (map name, number of players, etc.)
 void GameLoop::initializeGame()
@@ -309,9 +356,15 @@ void GameLoop::mainLoop()
 	//FIRST TURN
 	if (gameTurnMarker == 1)
 	{
+
 		cout << "First Turn: Each Player will pick a Race/Special Power Combo, Conquer Some Regions, and score some Victory Coins." << endl;
 		for (auto & player : players)
 		{
+			if (decoratorRequest)
+			{
+				addDecorator();
+			}
+
 			currentPlayer = player;
 
 			cout << (*player).getPlayerName() << "'s turn." << endl;
@@ -344,6 +397,7 @@ void GameLoop::mainLoop()
 						if (region->getRegionName() == choice)
 						{
 							(*player).conquers(region, true);
+							notify();
 						}
 					}
 				}
@@ -363,6 +417,10 @@ void GameLoop::mainLoop()
 	{
 		for (auto & player : players)
 		{
+			if (decoratorRequest)
+			{
+				addDecorator();
+			}
 			followingTurn(player);
 		}
 		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
@@ -491,6 +549,7 @@ void GameLoop::followingTurn(Player* player)
 
 GameLoop::GameLoop()
 {
+	decoratorRequest = true;
 }
 
 GameLoop::~GameLoop()

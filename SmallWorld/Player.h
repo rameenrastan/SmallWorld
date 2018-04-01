@@ -41,7 +41,8 @@ public:
 	int getVictoryCoinCount();
 	void setVictoryCoinCount(int v);
 	bool getRaceInDecline();
-
+	string getRaceName() { if (race.getRaceName() == "AMAZONS" && badge.getBadgeName() == "ALCHEMIST") { return ""; } else { return race.getRaceName(); } }
+	string getBadgeName() { if (race.getRaceName() == "AMAZONS" && badge.getBadgeName() == "ALCHEMIST") { return ""; } else { return badge.getBadgeName(); } }
 	bool checkRegionAdjacency(Region* region);
 	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
 	void conquers(Region* &region, bool finalConquest);

@@ -17,13 +17,18 @@ void VictoryCoinsObserver::update()
 	//Victory Coins Observer Decorator: Displays the Victory Coins earned by each player
 
 	GameStatisticsObserverDecorator::update();
+	
 
 	GameLoop* subject = decoratedObserver->getSubject();
 	vector<Player*> players = subject->getPlayers();
-	
-	for (auto & player : players)
+
+	for (int i = 0; i < players.size(); i++)
 	{
-		cout << player->getPlayerName() << " has " << player->getVictoryCoinCount() << " Victory Coins." << endl;
+		if (players[i]->getVictoryCoinCount() > victoryCoins[i])
+		{
+			cout << players[i]->getPlayerName() << " has scored " << players[i]->getVictoryCoinCount() - victoryCoins[i] << " Victory Coins." << endl;
+			victoryCoins[i] = players[i]->getVictoryCoinCount();
+		}
 	}
 
 }

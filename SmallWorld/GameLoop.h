@@ -22,7 +22,9 @@ private:
 	string phase;
 	GameDeck gameDeck;
 	Player* currentPlayer;
+	bool decoratorRequest;
 public:
+	void addDecorator();
 	Map gameMap;
 	Player* getCurrentPlayer() { return currentPlayer; };
 	vector<Player*> players;

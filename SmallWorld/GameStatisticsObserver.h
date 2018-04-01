@@ -9,8 +9,10 @@ public:
 	GameStatisticsObserver(GameLoop* subj);
 	void update();
 	void display();
-	GameLoop* getSubject() { return subject;  }
-private:
+	GameLoop* getSubject() { return subject; }
+protected:
 	GameLoop * subject;
+private:
+	int turnNumber;
 };
 
