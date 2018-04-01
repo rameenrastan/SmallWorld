@@ -384,8 +384,7 @@ void GameLoop::mainLoop()
 				cout << (*player).getPlayerName() << " must pick a race/power combo." << endl;
 
 				phase = "Picks Race";
-
-			
+	
 				playerPicksRace(player);    
 				notify();					
 
@@ -421,7 +420,7 @@ void GameLoop::mainLoop()
 				}
 				notify();
 
-			//		phase = "Scores";
+			    phase = "Scores";
 				(*player).scores(&gameDeck);
 				notify();
 			}
@@ -506,6 +505,7 @@ void GameLoop::followingTurn(Player* player)
 						if (region->getRegionName() == regionName)
 						{
 							(*player).conquers(region, true);
+							notify();
 						}
 					}
 				}
@@ -531,6 +531,7 @@ void GameLoop::followingTurn(Player* player)
 						if (region->getRegionName() == regionName)
 						{
 							(*player).abandonRegion(region);
+							notify();
 						}
 					}
 				}
@@ -548,6 +549,7 @@ void GameLoop::followingTurn(Player* player)
 				else {
 					playerInDecline(player);
 					playerTurn = false;
+					notify();
 				}
 				break;
 
