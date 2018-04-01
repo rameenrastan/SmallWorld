@@ -8,9 +8,12 @@
 #include "Badge.h"
 #include <algorithm>
 #include "Subject.h"
+#include "Strategy.h"
+//#include "Aggressive.h"
 
 using namespace std;
 
+class Aggresive;
 /*
 This class is the body of the program: it contains the logic of the Game Loop (from initializing/starting a game to handling all turn-based logic)
 */

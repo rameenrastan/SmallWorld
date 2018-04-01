@@ -147,8 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Aggressive.h" />
     <ClInclude Include="Badge.h" />
     <ClInclude Include="Banner.h" />
+    <ClInclude Include="Defensive.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="GameDeck.h" />
     <ClInclude Include="GameLoop.h" />
@@ -156,13 +158,16 @@
     <ClInclude Include="GameStatisticsObserverDecorator.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
+    <ClInclude Include="Moderate.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PhaseObserver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDominationObserver.h" />
     <ClInclude Include="PlayerHandsObserver.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Strategy.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Token.h" />
@@ -170,8 +175,10 @@
     <ClInclude Include="VictoryCoinsObserver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="Badge.cpp" />
     <ClCompile Include="Banner.cpp" />
+    <ClCompile Include="Defensive.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="GameDeck.cpp" />
     <ClCompile Include="GameLoop.cpp" />
@@ -179,11 +186,13 @@
     <ClCompile Include="GameStatisticsObserverDecorator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="Moderate.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PhaseObserver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDominationObserver.cpp" />
     <ClCompile Include="PlayerHandsObserver.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="SmallWorld.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -192,6 +201,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Strategy.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="VictoryCoin.cpp" />

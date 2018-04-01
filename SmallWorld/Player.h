@@ -12,13 +12,17 @@
 
 using namespace std;
 
+class GameLoop;
 class Region;
+class Strategy;
 /*
 Implements the functionality of a player playing the Small World game.
 */
 class Player
 {
 private:
+	Strategy *strategy;
+//	Aggressive * x;
 	Badge badge;
 	Banner race;
 	Dice dice;
@@ -26,11 +30,19 @@ private:
 	int tokenCount;
 	int victoryCoinCount;
 	bool raceInDecline;
+	bool hasStrategy;
 	
 public:
 	Player();
-	Player(string);
+	Player(string name);
+
 	~Player();
+
+
+	void execute1(Map* gameMap, Player* player, string phase, GameLoop * gl, GameDeck* gd);
+
+	void setStrategy(Strategy *newStrategy);
+	void executeStrategy(Map* gameMap, Player* player, string phase, GameLoop * gl, GameDeck* gd);
 	string playerName;
 	vector<Region*> ownedRegions;
 	string getPlayerName();
@@ -41,6 +53,8 @@ public:
 	int getVictoryCoinCount();
 	void setVictoryCoinCount(int v);
 	bool getRaceInDecline();
+	void setHasStrategy(bool strat);
+	bool getHasStrategy();
 
 	bool checkRegionAdjacency(Region* region);
 	void picks_race(Banner banner, Badge bad, GameDeck*const &gamedeck);
