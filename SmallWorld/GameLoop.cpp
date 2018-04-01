@@ -4,6 +4,7 @@
 #include "PlayerDominationObserver.h"
 #include "PlayerHandsObserver.h"
 #include "VictoryCoinsObserver.h"
+#include "Aggressive.h"
 
 void GameLoop::addDecorator()
 {
@@ -268,32 +269,32 @@ void GameLoop::playerPicksRace(Player* player)
 	switch (option) {
 		case 0:
 			player->picks_race(pairs[0].first, pairs[0].second, &gameDeck);
-			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			cout << "\nYou have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
 			pairs.erase(pairs.begin() + 0);
 			break;
 		case 1:
 			player->picks_race(pairs[1].first, pairs[1].second, &gameDeck);
-			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			cout << "\nYou have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
 			pairs.erase(pairs.begin() + 1);
 			break;
 		case 2:
 			player->picks_race(pairs[2].first, pairs[2].second, &gameDeck);
-			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			cout << "\nYou have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
 			pairs.erase(pairs.begin() + 2);
 			break;
 		case 3:
 			player->picks_race(pairs[3].first, pairs[3].second, &gameDeck);
-			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			cout << "\nYou have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
 			pairs.erase(pairs.begin() + 3);
 			break;
 		case 4:
 			player->picks_race(pairs[4].first, pairs[4].second, &gameDeck);
-			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			cout << "\nYou have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
 			pairs.erase(pairs.begin() + 4);
 			break;
 		case 5:
 			player->picks_race(pairs[5].first, pairs[5].second, &gameDeck);
-			cout << "You have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
+			cout << "\nYou have chosen: " << pairs[option].second.getBadgeName() << " " << pairs[option].first.getRaceName() << endl;
 			pairs.erase(pairs.begin() + 5);
 			break;
 	}
@@ -356,7 +357,7 @@ void GameLoop::mainLoop()
 	//FIRST TURN
 	if (gameTurnMarker == 1)
 	{
-
+		
 		cout << "First Turn: Each Player will pick a Race/Special Power Combo, Conquer Some Regions, and score some Victory Coins." << endl;
 		for (auto & player : players)
 		{
@@ -365,49 +366,78 @@ void GameLoop::mainLoop()
 				addDecorator();
 			}
 
+			char strategyChoice;
 			currentPlayer = player;
 
-			cout << (*player).getPlayerName() << "'s turn." << endl;
+			cout << player->getPlayerName() << "'s turn." << endl;
+			cout << "Please select a strategy for " << player->getPlayerName() << " to automatically execute. Type N if you do not want to execute any strategies." << endl;
+			cout << "  1. Aggressive Strategy (chooses power combo and conquers as many regions as possible)" << endl;
+			cout << "  2. Defensive Strategy (chooses power combo and conquers regions owned by other players)" << endl;
+			cout << "  3. Moderate Strategy (chooses power combo and plays a mix of aggressive and defensive strategy)" << endl;
+			cout << "  4. Random Strategy (chooses power combo and randomly conquers regions/randomly puts race in decline)" << endl;
 
-			cout << (*player).getPlayerName() << " must pick a race/power combo." << endl;
+			cin >> strategyChoice;
+
+			if (strategyChoice == 'N' || strategyChoice == 'n') {
+				cout << "No strategy selected for " << player->getPlayerName() << ", the game will be played manually." << endl;
+
+				cout << (*player).getPlayerName() << " must pick a race/power combo." << endl;
+
+				phase = "Picks Race";
+
 			
-			phase = "Picks Race";
-			playerPicksRace(player);
-			notify();
+				playerPicksRace(player);    
+				notify();					
 
-			phase = "Conquer Regions";
-			cout << (*player).getPlayerName() << " must conquer some regions." << endl;
+				phase = "Conquer Regions";
+				cout << (*player).getPlayerName() << " must conquer some regions." << endl;
 
-			gameMap.displayRegionList();
+				gameMap.displayRegionList();
 
-			while ((*player).getTokenCount() > 0)
-			{
-				string choice;
-				cout << "Which region would you like to conquer? (type N to end conquest)" << endl;
-				cin >> choice;
+				//	currentPlayer->executeStrategy(&gameMap, player, phase, this, &gameDeck);
 
-				if (choice == "N")
+				while ((*player).getTokenCount() > 0)
 				{
-					cout << "Conquest ended!" << endl;
-					break;
-				}
-				else {
-					for (auto & region : gameMap.regions)
+					string choice;
+					cout << "Which region would you like to conquer? (type N to end conquest)" << endl;
+					cin >> choice;
+					
+					if (choice == "N")
 					{
-						if (region->getRegionName() == choice)
+						cout << "Conquest ended!" << endl;
+						break;
+					}
+					else {
+						for (auto & region : gameMap.regions)
 						{
-							(*player).conquers(region, true);
-							notify();
+							if (region->getRegionName() == choice)
+							{
+								(*player).conquers(region, true);
+								notify();
+							}
 						}
 					}
+
 				}
+				notify();
 
+			//		phase = "Scores";
+				(*player).scores(&gameDeck);
+				notify();
 			}
-			notify();
-
-			phase = "Scores";
-			(*player).scores(&gameDeck);
-			notify();
+			else {
+				switch (strategyChoice)
+				{
+				case '1': //Aggressive
+					player->setStrategy(new Aggressive());
+					cout << "Aggressive strategy chosen..." << endl;
+					player->setHasStrategy(true);
+					player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+					player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+					break;
+				}
+			}
+			
 		}
 		cout << "First Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
@@ -422,7 +452,10 @@ void GameLoop::mainLoop()
 				addDecorator();
 			}
 			followingTurn(player);
+			player->scores(&gameDeck);
+			
 		}
+
 		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
 
@@ -434,22 +467,26 @@ void GameLoop::followingTurn(Player* player)
 {
 	cout << (*player).getPlayerName() << "'s turn:" << endl;
 	player->readyTroops();
-	bool playerTurn = true;
-	while (playerTurn) {
-		cout << "Please choose what you would like to do:" << endl;
-		cout << "1. Conquer new regions." << endl;
-		cout << "2. Abandon regions." << endl;
-		cout << "3. Put your race in decline and select a new one (ends your turn)." << endl;
-		cout << "4. Redeploy your troops (ends your turn)." << endl;
-		cout << "5. Consult summary sheet." << endl;
+	if (player->getHasStrategy()){
+		player->executeStrategy(&gameMap, player, "Following Turn", this, &gameDeck);
+	}
+	else {
+		bool playerTurn = true;
+		while (playerTurn) {
+			cout << "Please choose what you would like to do:" << endl;
+			cout << "1. Conquer new regions." << endl;
+			cout << "2. Abandon regions." << endl;
+			cout << "3. Put your race in decline and select a new one (ends your turn)." << endl;
+			cout << "4. Redeploy your troops (ends your turn)." << endl;
+			cout << "5. Consult summary sheet." << endl;
 
-		char choice;
-		string regionName;
-		string redeploy;
-		string decline;
+			char choice;
+			string regionName;
+			string redeploy;
+			string decline;
 
-		cin >> choice ;
- 
+			cin >> choice;
+
 			switch (choice)
 			{
 			case '1': //conquer
@@ -457,6 +494,7 @@ void GameLoop::followingTurn(Player* player)
 				cout << "Please write the name of the region you wish to conquer from the list: (type N to cancel)" << endl;
 				gameMap.displayRegionList();
 				cin >> regionName;
+				
 				if (regionName == "N")
 				{
 					cout << "Conquest cancelled..." << endl;
@@ -474,7 +512,7 @@ void GameLoop::followingTurn(Player* player)
 				break;
 
 			case '2': //abandon
-				//need to display list of regions owned 
+				
 				if (player->ownedRegions.empty()) {
 					cout << "You currently do not own any regions. Abandoning cancelled..." << endl;
 					break;
@@ -490,7 +528,7 @@ void GameLoop::followingTurn(Player* player)
 				else {
 					for (auto & region : player->ownedRegions)
 					{
-					 if (region->getRegionName() == regionName)
+						if (region->getRegionName() == regionName)
 						{
 							(*player).abandonRegion(region);
 						}
@@ -498,7 +536,7 @@ void GameLoop::followingTurn(Player* player)
 				}
 
 				break;
-			
+
 			case '3': //decline
 				cout << "You have chosen to decline your race, this action cannot be reversed." << endl;
 				cout << "Press any key to proceed, type N to cancel." << endl;
@@ -513,9 +551,9 @@ void GameLoop::followingTurn(Player* player)
 				}
 				break;
 
-			case '4':  //redeploy here/end turn with the c=false
+			case '4':  //redeploy here/end turn
 				cout << "You have chosen to redeploy your troops, your turn will end once you are done." << endl;
-				cout <<	"Press any key to proceed, type N to cancel." << endl;
+				cout << "Press any key to proceed, type N to cancel." << endl;
 				cin >> redeploy;
 				if (redeploy == "N") {
 					cout << "Redeployment cancelled..." << endl;
@@ -537,7 +575,7 @@ void GameLoop::followingTurn(Player* player)
 				}
 				break;
 
-			case '5':  //testing purposes
+			case '5':  //display summary sheet
 				player->summarySheet();
 				break;
 			default:
@@ -545,6 +583,7 @@ void GameLoop::followingTurn(Player* player)
 				break;
 			}
 		}
+	}
 }
 
 GameLoop::GameLoop()

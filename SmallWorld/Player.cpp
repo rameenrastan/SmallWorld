@@ -10,14 +10,47 @@ Player::Player()
 Player::Player(string name)
 {
 	playerName = name;
+	
 	regionCount = 0;
 	tokenCount = 0;
 	victoryCoinCount = 5;
 	raceInDecline = false;
 }
 
+
+
 Player::~Player()
 {
+}
+
+
+void Player::execute1(Map* gameMap, Player* player, string phase, GameLoop* gl, GameDeck* gd)
+{
+	cout << "hi";
+	if (phase == "FollowingTurn" && player->getTokenCount() < 2) {
+
+		player->decline(gl->pairs[0].first, gl->pairs[0].second, gd);
+	}
+
+	else if (player->getTokenCount() > 2) {
+		for (auto & region : gameMap->regions){
+				
+					(*player).conquers(region, true);
+				
+			}
+		}
+	
+}
+
+
+void Player::setStrategy(Strategy * newstrategy)
+{
+	this->strategy = newstrategy;
+}
+
+void Player::executeStrategy(Map* gameMap, Player* player, string phase, GameLoop * gl, GameDeck* gd)
+{
+	this->strategy->execute(gameMap,player,phase,gl,gd);
 }
 
 string Player::getPlayerName(){
@@ -60,6 +93,16 @@ void Player::setVictoryCoinCount(int v) {
 bool Player::getRaceInDecline()
 {
 	return raceInDecline;
+}
+
+void Player::setHasStrategy(bool strat)
+{
+	hasStrategy = strat;
+}
+
+bool Player::getHasStrategy()
+{
+	return hasStrategy;
 }
 
 /*
