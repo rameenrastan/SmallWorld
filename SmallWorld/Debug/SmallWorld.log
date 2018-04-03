@@ -1,8 +1,6 @@
-﻿  PhaseObserver.cpp
-  GameLoop.cpp
+﻿  GameLoop.cpp
 c:\users\rameen\source\repos\smallworld\smallworld\gameloop.cpp(188): warning C4018: '<': signed/unsigned mismatch
 c:\users\rameen\source\repos\smallworld\smallworld\gameloop.cpp(199): warning C4018: '<': signed/unsigned mismatch
 c:\users\rameen\source\repos\smallworld\smallworld\gameloop.cpp(249): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 c:\users\rameen\source\repos\smallworld\smallworld\gameloop.cpp(457): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Generating Code...
   SmallWorld.vcxproj -> C:\Users\Rameen\source\repos\SmallWorld\Debug\SmallWorld.exe

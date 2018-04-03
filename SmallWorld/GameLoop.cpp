@@ -484,7 +484,19 @@ void GameLoop::mainLoop()
 		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
 	}
 
-	cout << "Game Finished! The player with the highest number of Victory Coins is the winner!" << endl;
+	int max=0;
+	string winner = "";
+
+	for (auto & player : players)
+	{
+		if (player->getVictoryCoinCount() > max)
+		{
+			max = player->getVictoryCoinCount();
+			winner = player->getPlayerName();
+		}
+	}
+
+	cout << "Game Finished! " << winner << " is the winner with " << max << " victory coins!" << endl; 
 }
 
 //gives user options in following turns
