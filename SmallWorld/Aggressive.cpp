@@ -32,11 +32,12 @@ void Aggressive::execute(Map* gameMap, Player* player, string phase, GameLoop* g
 		for (auto & region : gameMap->regions) {
 
 			(*player).conquers(region, true);
+			
 
 		}
 	}
 
-	if (phase == "Following Turn" && player->getTokenCount() < 2) {
+	if (phase == "Following Turn" && player->getTokenCount() <= 2) {
 
 		player->decline(gl->pairs[0].first, gl->pairs[0].second, gd);
 	}
@@ -49,8 +50,4 @@ void Aggressive::execute(Map* gameMap, Player* player, string phase, GameLoop* g
 			}
 		}
 	
-
-
-
-
 }

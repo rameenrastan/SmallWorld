@@ -5,6 +5,9 @@
 #include "PlayerHandsObserver.h"
 #include "VictoryCoinsObserver.h"
 #include "Aggressive.h"
+#include "Defensive.h"
+#include "Moderate.h"
+#include "Random.h"
 
 void GameLoop::addDecorator()
 {
@@ -393,8 +396,7 @@ void GameLoop::mainLoop()
 
 				gameMap.displayRegionList();
 
-				//	currentPlayer->executeStrategy(&gameMap, player, phase, this, &gameDeck);
-
+				
 				while ((*player).getTokenCount() > 0)
 				{
 					string choice;
@@ -431,6 +433,28 @@ void GameLoop::mainLoop()
 					player->setStrategy(new Aggressive());
 					cout << "Aggressive strategy chosen..." << endl;
 					player->setHasStrategy(true);
+					player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+					player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+					break;
+				case '2': //Defensive
+					player->setStrategy(new Defensive());
+					cout << "Defensive strategy chosen..." << endl;
+					player->setHasStrategy(true);
+					player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+					player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+					break;
+				case '3': //Moderate
+					player->setStrategy(new Moderate());
+					cout << "Moderate strategy chosen..." << endl;
+					player->setHasStrategy(true);
+					player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+					player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+					break;
+				case '4': //Random
+					player->setStrategy(new Random());
+					cout << "Random strategy chosen..." << endl;
+					player->setHasStrategy(true);
+					srand(time(0));
 					player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
 					player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
 					break;

@@ -336,7 +336,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 	{
 		if ((*region).getNeighbors().size() > 4)
 		{
-			cout << "Cannot conquer region " << region->getRegionName() << "! You must conquer a Border region on your First Conquest!" << endl;
+			cout << "Cannot conquer region " << region->getRegionName() << "! You must conquer a Border region if you do not own any regions!" << endl;
 			return;
 		}
 	}
@@ -356,7 +356,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 			else if (finalConquest && tokenCount > 0)
 			{
 				string choice;
-				cout << "You do not have enough tokens to conquer this empty region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cout << "You do not have enough tokens to conquer empty region " << (*region).getRegionName() <<". Would you like to use a Reinforcement Roll (Y/N)?" << endl;
 				cin >> choice;
 
 				if (choice == "Y" || choice == "y" || choice == "yes")
@@ -364,7 +364,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 					int roll = reinforcementRoll(&dice);
 					if (roll + tokenCount > 1)
 					{
-						cout << "You have rolled a " << roll << " and have successfully conquered the empty region!" << endl;
+						cout << "You have rolled a " << roll << " and have successfully conquered empty region!" << endl;
 						ownedRegions.push_back(region);
 						(*region).setOwned(true);
 						(*region).setNumTokens(tokenCount);
@@ -374,7 +374,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 						cout << playerName << " has conquered empty region " << (*region).getRegionName() << endl;
 					}
 					else {
-						cout << "The roll was not high enough to conquer this region!" << endl;
+						cout << "The roll was not high enough to conquer region " << (*region).getRegionName()<< "!" << endl;
 					}
 				}
 				else
@@ -385,7 +385,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 
 			}
 			else {
-				cout << "You do not have enough tokens to conquer this region!" << endl;
+				cout << "You do not have enough tokens to conquer region " << (*region).getRegionName() << "!" << endl;
 			}
 		}
 		else if ((*region).hasMountain())
@@ -403,7 +403,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 			else if (finalConquest && tokenCount > 0)
 			{
 				string choice;
-				cout << "You do not have enough tokens to conquer this Mountain region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cout << "You do not have enough tokens to conquer this Mountain region " << (*region).getRegionName() << ". Would you like to use a Reinforcement Roll (Y/N)?" << endl;
 				cin >> choice;
 		
 				if (choice == "Y" || choice == "y" || choice == "yes")
@@ -422,7 +422,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 						cout << playerName << " has conquered Mountain region " << (*region).getRegionName() << endl;
 					}
 					else {
-						cout << "The roll was not high enough to conquer this region!" << endl;
+						cout << "The roll was not high enough to conquer region " << (*region).getRegionName() << "!" << endl;
 					}
 				}
 				else
@@ -433,7 +433,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 
 			}
 			else {
-				cout << "You do not have enough tokens to conquer this region!" << endl;
+				cout << "You do not have enough tokens to conquer region " << (*region).getRegionName() << "!" << endl;
 			}
 		}
 		else if ((*region).hasLostTribe())
@@ -451,7 +451,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 			else if (finalConquest && tokenCount > 0)
 			{
 				string choice;
-				cout << "You do not have enough tokens to conquer this Lost Tribe region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cout << "You do not have enough tokens to conquer Lost Tribe region " << (*region).getRegionName() << ". Would you like to use a Reinforcement Roll (Y/N)?" << endl;
 				cin >> choice;
 				
 				if (choice == "Y" || choice == "y" || choice == "yes")
@@ -470,7 +470,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 						cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 					}
 					else {
-						cout << "The roll was not high enough to conquer this region!" << endl;
+						cout << "The roll was not high enough to conquer region " << (*region).getRegionName() << "!" << endl;
 					}
 				}
 				else
@@ -481,12 +481,16 @@ void Player::conquers(Region* &region, bool finalConquest)
 
 			}
 			else {
-				cout << "You do not have enough tokens to conquer this region!" << endl;
+				cout << "You do not have enough tokens to conquer region " << (*region).getRegionName() << "!" << endl;
 			}
 		}
 		else if ((*region).isOwned())
 		{
-			if (tokenCount >= (*((*region).getOwner())).getTokenCount() + 2)
+			if (region->getOwner()->getPlayerName() == getPlayerName()) {
+				cout << "Cannot conquer region " << region->getRegionName() <<", you already own this region." << endl;
+				
+			}
+			else if (tokenCount >= (*((*region).getOwner())).getTokenCount() + 2)
 			{
 			
 				cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
@@ -502,34 +506,14 @@ void Player::conquers(Region* &region, bool finalConquest)
 				(*region).setOwner(this);
 			}
 			else {
-				cout << "You do not have enough tokens to conquer this region!" << endl;
+				cout << "You do not have enough tokens to conquer region " << (*region).getRegionName() << "!" << endl;
 			}
-
-
-		/*	cout << "Abandoning Region " << r->getRegionName() << endl;
-			cout << "Gaining " << r->getNumTokens() << " tokens back in hand." << endl;
-			tokenCount += r->getNumTokens();
-			r->setNumTokens(0);
-			for (int i = 0; i < ownedRegions.size(); i++)
-			{
-				if (ownedRegions[i]->getRegionName() == r->getRegionName())
-				{
-					cout << "Removing region " << ownedRegions[i]->getRegionName() << " from your owned regions." << endl;
-					ownedRegions.erase(ownedRegions.begin() + i);
-				}
-			}
-			r->setOwned(false);*/
-
-
-
-
-
 
 		}
 		else if (finalConquest && (*((*region).getOwner())).getTokenCount() -1)
 		{
 			string choice;
-			cout << "You do not have enough tokens to conquer this region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+			cout << "You do not have enough tokens to conquer region " << (*region).getRegionName() <<". Would you like to use a Reinforcement Roll (Y/N)?" << endl;
 			cin >> choice;
 			
 			if (choice == "Y" || choice == "y" || choice == "yes")
@@ -545,7 +529,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 					cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 				}
 				else {
-					cout << "The roll was not high enough to conquer this region!" << endl;
+					cout << "The roll was not high enough to conquer region " << (*region).getRegionName() << "!" << endl;
 				}
 			}
 			else
@@ -571,7 +555,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 			else if (finalConquest && tokenCount > 0)
 			{
 				string choice;
-				cout << "You do not have enough tokens to conquer this region. Would you like to use a Reinforcement Roll (Y/N)?" << endl;
+				cout << "You do not have enough tokens to conquer region " << (*region).getRegionName() << ". Would you like to use a Reinforcement Roll (Y/N)?" << endl;
 				cin >> choice;
 				
 				if (choice == "Y" || choice == "y" || choice == "yes")
@@ -588,7 +572,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 						cout << playerName << " has conquered region " << (*region).getRegionName() << endl;
 					}
 					else {
-						cout << "The roll was not high enough to conquer this region!" << endl;
+						cout << "The roll was not high enough to conquer region " << (*region).getRegionName() << "!" << endl;
 					}
 				}
 				else
@@ -599,7 +583,7 @@ void Player::conquers(Region* &region, bool finalConquest)
 
 			}
 			else {
-				cout << "You do not have enough tokens to conquer this region!" << endl;
+				cout << "You do not have enough tokens to conquer region " << (*region).getRegionName() << "!" << endl;
 			}
 		}
 
