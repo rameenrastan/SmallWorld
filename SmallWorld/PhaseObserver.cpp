@@ -24,12 +24,12 @@ void PhaseObserver::update()
 	Player* player = subject->getCurrentPlayer();
 
 	cout << "Turn " << turnNumber << ": " << player->getPlayerName() << " " << phase << endl;
-	
+
 	if (phase == "Picks Race" || phase == "Indecline")
 	{
-		cout << player->getPlayerName() << " updated race/power combo to : " << player->getRaceName() << " " << player->getBadgeName() << endl; 
+		cout << player->getPlayerName() << " updated race/power combo to : " << player->getRaceName() << " " << player->getBadgeName() << endl;
 	}
-	else if (phase == "Conquer Regions")
+	else if (phase == "Conquer Regions" || phase == "Abandon Region")
 	{
 		cout << player->getPlayerName() << " updated list of conquered regions: " << endl;
 		for (auto & region : player->ownedRegions)

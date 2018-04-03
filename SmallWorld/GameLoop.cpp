@@ -388,8 +388,8 @@ void GameLoop::mainLoop()
 
 				phase = "Picks Race";
 	
-				playerPicksRace(player);    
-				notify();					
+				playerPicksRace(player); 
+				notify();
 
 				phase = "Conquer Regions";
 				cout << (*player).getPlayerName() << " must conquer some regions." << endl;
@@ -468,6 +468,7 @@ void GameLoop::mainLoop()
 	//FOLLOWING TURNS
 	while (gameTurnMarker <= numTurns)
 	{
+		notify();
 		for (auto & player : players)
 		{
 			if (decoratorRequest)
@@ -476,6 +477,7 @@ void GameLoop::mainLoop()
 			}
 			followingTurn(player);
 			player->scores(&gameDeck);
+			notify();
 			
 		}
 
@@ -513,6 +515,7 @@ void GameLoop::followingTurn(Player* player)
 			switch (choice)
 			{
 			case '1': //conquer
+				phase = "Conquer Regions";
 				cout << "You currently have " << (*player).getTokenCount() << " tokens." << endl;
 				cout << "Please write the name of the region you wish to conquer from the list: (type N to cancel)" << endl;
 				gameMap.displayRegionList();
@@ -554,6 +557,7 @@ void GameLoop::followingTurn(Player* player)
 					{
 						if (region->getRegionName() == regionName)
 						{
+							phase = "Abandon Region";
 							(*player).abandonRegion(region);
 							notify();
 						}
@@ -571,6 +575,7 @@ void GameLoop::followingTurn(Player* player)
 					break;
 				}
 				else {
+					phase = "decline";
 					playerInDecline(player);
 					playerTurn = false;
 					notify();
