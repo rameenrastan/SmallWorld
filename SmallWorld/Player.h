@@ -2,10 +2,8 @@
 #include <vector>
 #include <iostream>
 #include "Region.h"
-#include "Token.h"
 #include "Badge.h"
 #include "Banner.h"
-#include "VictoryCoin.h"
 #include "Dice.h"
 #include "GameDeck.h"
 #include "GameLoop.h"

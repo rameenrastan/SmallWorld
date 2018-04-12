@@ -170,8 +170,6 @@
     <ClInclude Include="Strategy.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Token.h" />
-    <ClInclude Include="VictoryCoin.h" />
     <ClInclude Include="VictoryCoinsObserver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -203,8 +201,6 @@
     </ClCompile>
     <ClCompile Include="Strategy.cpp" />
     <ClCompile Include="Subject.cpp" />
-    <ClCompile Include="Token.cpp" />
-    <ClCompile Include="VictoryCoin.cpp" />
     <ClCompile Include="VictoryCoinsObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
