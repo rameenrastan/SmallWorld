@@ -22,7 +22,6 @@ class Player
 {
 private:
 	Strategy *strategy;
-//	Aggressive * x;
 	Badge badge;
 	Banner race;
 	Dice dice;
@@ -38,8 +37,6 @@ public:
 
 	~Player();
 
-
-	void execute1(Map* gameMap, Player* player, string phase, GameLoop * gl, GameDeck* gd);
 
 	void setStrategy(Strategy *newStrategy);
 	void executeStrategy(Map* gameMap, Player* player, string phase, GameLoop * gl, GameDeck* gd);

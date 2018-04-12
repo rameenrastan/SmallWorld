@@ -14,7 +14,6 @@ Defensive::~Defensive()
 void Defensive::execute(Map * gameMap, Player * player, string phase, GameLoop * gl, GameDeck * gd)
 {
 	if (phase == "Picks Race") {
-		srand(time(NULL));
 		int x = rand() % 6;
 		player->picks_race(gl->pairs[x].first, gl->pairs[x].second, gd);
 		cout << "You have chosen: " << gl->pairs[x].second.getBadgeName() << " " << gl->pairs[x].first.getRaceName() << endl;

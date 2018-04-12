@@ -24,25 +24,6 @@ Player::~Player()
 }
 
 
-void Player::execute1(Map* gameMap, Player* player, string phase, GameLoop* gl, GameDeck* gd)
-{
-	cout << "hi";
-	if (phase == "FollowingTurn" && player->getTokenCount() < 2) {
-
-		player->decline(gl->pairs[0].first, gl->pairs[0].second, gd);
-	}
-
-	else if (player->getTokenCount() > 2) {
-		for (auto & region : gameMap->regions){
-				
-					(*player).conquers(region, true);
-				
-			}
-		}
-	
-}
-
-
 void Player::setStrategy(Strategy * newstrategy)
 {
 	this->strategy = newstrategy;

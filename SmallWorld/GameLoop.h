@@ -37,6 +37,7 @@ public:
 	void initializeGame();
 	void placeMountainAndLostTribe();
 	void startUpPhase();
+	void startUpPhaseTournament();
 	void distributeInitialVictoryCoins();
 	void determineTurnOrder();
 	void generateRaceCombo();
@@ -45,6 +46,11 @@ public:
 	vector <pair<Banner, Badge>> pairs;
 	void mainLoop();
 	void followingTurn(Player* player);
+	void mainLoopTournament();
+	void twoPlayerTournament();
+	void threePlayerTournament();
+	void fourPlayerTournament();
+	void fivePlayerTournament();
 	GameLoop();
 	~GameLoop();
 };

@@ -59,63 +59,75 @@ void GameLoop::initializeGame()
 	phase = "Initializing Game";
 
 	int numPlayers;
-	string mapFileName; 
+	string mapFileName;
 	MapLoader ml;
 
+
 	cout << "Starting a game of Small World!" << endl;
-	cout << "Please enter the name of the map:" << endl;
+	cout << "Please enter the name of the map: \n(valid.map for 2 players, 3pvalid.map for 3 players, 4pvalid.map for 4 players, 5pvalid.map for 5 players)" << endl;
 	cin >> mapFileName;
+	
+	/*	Exception handling, throws error here if map file name is not valid. Try/Catch block in main method (SmallWorld.cpp) to prevent program from terminating 
+		after throwing exception.(else statement is where error is thrown ) */
 
-	while (!ml.loadMap(mapFileName).isConnected())
-	{
-	cout << "This map is invalid! Please enter a valid map:" << endl;
-	cin >> mapFileName;
-	}
-	gameMap = ml.loadMap(mapFileName);
-	cout << "Please enter the number of players in the game (2 to 5):" << endl;
-	cin >> numPlayers;
-	while (numPlayers < 2 || numPlayers > 5)
-	{
-		cout << "Invalid player count, please select 2 to 5 Players:" << endl;
+	if (mapFileName == "valid.map" || mapFileName == "2pvalid.map" || mapFileName == "3pvalid.map" || mapFileName == "4pvalid.map" || mapFileName == "5pvalid.map") {
+
+		while (!ml.loadMap(mapFileName).isConnected())
+		{
+			cout << "This map is invalid! Please enter a valid map:" << endl;
+			cin >> mapFileName;
+		}
+
+
+		gameMap = ml.loadMap(mapFileName);
+		cout << "Please enter the number of players in the game (2 to 5):" << endl;
 		cin >> numPlayers;
-	}
-	switch (numPlayers)
-	{
-	case 2: 
-		cout << "2 Player Mode Selected." << endl;
- 		players.push_back(new Player("Player1"));
-		players.push_back(new Player("Player2"));
-		numTurns = 10;
-		break;
-	case 3:
-		cout << "3 Player Mode Selected." << endl;
-		players.push_back(new Player("Player1"));
-		players.push_back(new Player("Player2"));
-		players.push_back(new Player("Player3"));
-		numTurns = 10;
-		break;
-	case 4:
-		cout << "4 Player Mode Selected." << endl;
-		players.push_back(new Player("Player1"));
-		players.push_back(new Player("Player2"));
-		players.push_back(new Player("Player3"));
-		players.push_back(new Player("Player4"));
-		numTurns = 9;
-		break;
-	case 5:
-		cout << "5 Player Mode Selected." << endl;
-		players.push_back(new Player("Player1"));
-		players.push_back(new Player("Player2"));
-		players.push_back(new Player("Player3"));
-		players.push_back(new Player("Player4"));
-		players.push_back(new Player("Player5"));
-		numTurns = 8;
-		break;
-	}
+		while (numPlayers < 2 || numPlayers > 5)
+		{
+			cout << "Invalid player count, please select 2 to 5 Players:" << endl;
+			cin >> numPlayers;
+		}
+		switch (numPlayers)
+		{
+		case 2:
+			cout << "2 Player Mode Selected." << endl;
+			players.push_back(new Player("Player1"));
+			players.push_back(new Player("Player2"));
+			numTurns = 10;
+			break;
+		case 3:
+			cout << "3 Player Mode Selected." << endl;
+			players.push_back(new Player("Player1"));
+			players.push_back(new Player("Player2"));
+			players.push_back(new Player("Player3"));
+			numTurns = 10;
+			break;
+		case 4:
+			cout << "4 Player Mode Selected." << endl;
+			players.push_back(new Player("Player1"));
+			players.push_back(new Player("Player2"));
+			players.push_back(new Player("Player3"));
+			players.push_back(new Player("Player4"));
+			numTurns = 9;
+			break;
+		case 5:
+			cout << "5 Player Mode Selected." << endl;
+			players.push_back(new Player("Player1"));
+			players.push_back(new Player("Player2"));
+			players.push_back(new Player("Player3"));
+			players.push_back(new Player("Player4"));
+			players.push_back(new Player("Player5"));
+			numTurns = 8;
+			break;
+		}
 
-	cout << "Initializing all game pieces..." << endl;
-	gameDeck = GameDeck();
-	//gameDeck.showDeckInfo();
+		cout << "Initializing all game pieces..." << endl;
+		gameDeck = GameDeck();
+		//gameDeck.showDeckInfo();
+	}
+	else {
+		throw "Error";
+	}
 	
 }
 
@@ -164,6 +176,29 @@ void GameLoop::startUpPhase()
 	placeMountainAndLostTribe();
 	distributeInitialVictoryCoins();
 	determineTurnOrder();
+	generateRaceCombo();
+}
+
+
+//Start Up Phase for Tournament 
+void GameLoop::startUpPhaseTournament()
+{
+
+	cout << "Placing the Game Turn Marker to the starting position." << endl;
+	gameTurnMarker = 1;
+
+	placeMountainAndLostTribe();
+	distributeInitialVictoryCoins();
+	gameMap.displayRegionList();
+
+	cout << "\nPlayer1 will start each turn!" << endl;
+	cout << "This is the determined turn order:" << endl;
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		cout << i + 1 << " " << (*players[i]).getPlayerName() << endl;
+	}
+
 	generateRaceCombo();
 }
 
@@ -627,6 +662,172 @@ void GameLoop::followingTurn(Player* player)
 			}
 		}
 	}
+}
+
+/* Main Loop for tournament (same as MainLoop method above but gets rid of user input) */
+
+void GameLoop::mainLoopTournament()
+{
+	
+	//FIRST TURN
+	srand(time(NULL));
+	if (gameTurnMarker == 1)
+	{
+
+		cout << "\nFirst Turn: Each Player will pick a Race/Special Power Combo, Conquer Some Regions, and score some Victory Coins." << endl;
+		for (auto & player : players)
+		{
+			
+			currentPlayer = player;
+
+			cout << player->getPlayerName() << "'s turn." << endl;
+			cout << "\nAutomatically selecting a strategy for " << player->getPlayerName() << " at random." << endl;
+
+		
+			int x = rand() % 4;
+			
+			if (x == 0) {  //Aggressive
+				player->setStrategy(new Aggressive());
+				cout << "Aggressive Strategy chosen..." << endl;
+				player->setHasStrategy(true);
+				player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+				player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+			}
+			else if (x == 1) {  //Defensive
+				player->setStrategy(new Defensive());
+				cout << "Defensive strategy chosen..." << endl;
+				player->setHasStrategy(true);
+				player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+				player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+			}
+			else if (x == 2) { //Moderate
+				player->setStrategy(new Moderate());
+				cout << "Moderate Strategy chosen..." << endl;
+				player->setHasStrategy(true);
+				player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+				player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+			}
+			else if (x == 3) { //Random
+				player->setStrategy(new Random());
+				cout << "Random Strategy chosen..." << endl;
+				player->setHasStrategy(true);
+				srand(time(0));
+				player->executeStrategy(&gameMap, player, "Picks Race", this, &gameDeck);
+				player->executeStrategy(&gameMap, player, "Conquer Regions", this, &gameDeck);
+			}
+			
+			
+
+		}
+		cout << "First Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
+	}
+	//FOLLOWING TURNS
+	while (gameTurnMarker <= numTurns)
+	{
+		notify();
+		for (auto & player : players)
+		{
+			
+			followingTurn(player);
+			player->scores(&gameDeck);
+			notify();
+
+		}
+
+		cout << "Turn finished... Game Turn Marker is moving to position " << ++gameTurnMarker << endl;
+	}
+
+	int max = 0;
+	string winner = "";
+
+	for (auto & player : players)
+	{
+		if (player->getVictoryCoinCount() > max)
+		{
+			max = player->getVictoryCoinCount();
+			winner = player->getPlayerName();
+		}
+	}
+
+	cout << "Game Finished! " << winner << " is the winner with " << max << " victory coins!" << endl;
+
+}
+
+/* Two Player tournament executing strategies*/
+
+void GameLoop::twoPlayerTournament()
+{
+	
+	cout << "Two Player Tournament:\nAdding 2 Players to the game..." << endl;
+	players.push_back(new Player("Player1"));
+	players.push_back(new Player("Player2"));
+	numTurns = 10;
+
+	MapLoader ml;
+	gameMap = ml.loadMap("valid.map");
+	gameDeck = GameDeck();
+
+	startUpPhaseTournament();
+	mainLoopTournament();
+	
+}
+
+/* Three Player tournament executing strategies*/
+
+void GameLoop::threePlayerTournament()
+{
+	cout << "Three Player Tournament:\nAdding 3 Players to the game..." << endl;
+	players.push_back(new Player("Player1"));
+	players.push_back(new Player("Player2"));
+	players.push_back(new Player("Player3"));
+	numTurns = 10;
+
+	MapLoader ml;
+	gameMap = ml.loadMap("3pvalid.map");
+	gameDeck = GameDeck();
+
+	startUpPhaseTournament();
+	mainLoopTournament();
+}
+
+/* Four Player tournament executing strategies*/
+
+void GameLoop::fourPlayerTournament()
+{
+	cout << "Four Player Tournament:\nAdding 4 Players to the game..." << endl;
+	players.push_back(new Player("Player1"));
+	players.push_back(new Player("Player2"));
+	players.push_back(new Player("Player3"));
+	players.push_back(new Player("Player4"));
+	numTurns = 9;
+
+	MapLoader ml;
+	gameMap = ml.loadMap("4pvalid.map");
+	gameDeck = GameDeck();
+
+	startUpPhaseTournament();
+	mainLoopTournament();
+}
+
+
+/* Five Player tournament executing strategies*/
+
+void GameLoop::fivePlayerTournament()
+{
+	cout << "Fiver Player Tournament:\nAdding 5 Players to the game..." << endl;
+	players.push_back(new Player("Player1"));
+	players.push_back(new Player("Player2"));
+	players.push_back(new Player("Player3"));
+	players.push_back(new Player("Player4"));
+	players.push_back(new Player("Player5"));
+	numTurns = 8;
+
+	MapLoader ml;
+	gameMap = ml.loadMap("5pvalid.map");
+	gameDeck = GameDeck();
+
+	startUpPhaseTournament();
+	mainLoopTournament();
 }
 
 GameLoop::GameLoop()
